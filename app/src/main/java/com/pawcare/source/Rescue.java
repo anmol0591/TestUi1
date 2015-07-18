@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.anm.uitest1.R;
@@ -30,7 +34,9 @@ import com.pawcare.source.location.GPSEnableDialog;
 
 import com.pawcare.source.location.LocationAddress;
 import com.pawcare.source.util.ConfirmRescue;
+import com.pawcare.source.util.ImageCapture;
 
+import java.io.File;
 import java.util.Calendar;
 
 /*
@@ -62,6 +68,8 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     String str_location;
     View view_res;
     protected LocationManager locationManager;
+    ImageView viewImage;            // For capturing image
+    ImageButton captureImage;       // Button for updating image
 
     @Override
     /**
@@ -71,6 +79,15 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
         initializeUIElements();
+
+        // Clicked add image button.
+        captureImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("PAWED", "Ishita: Image button clicked.");
+                selectImageDialog();
+            }
+        });
 
         btnGPSShowLocation.setOnClickListener(new View.OnClickListener() {
 
@@ -160,6 +177,14 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+        }
+    }
+
     public void initializeUIElements() {
         btnGPSShowLocation = (Button) view_res.findViewById(R.id.btn_location);
         btnRescue = (Button) view_res.findViewById(R.id.btn_rescue);
@@ -169,7 +194,8 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
         et_contact_number = (EditText) view_res.findViewById(R.id.et_contact_number);
         et_condition = (EditText) view_res.findViewById(R.id.et_condition);
         et_more_info = (EditText) view_res.findViewById(R.id.et_more_info);
-
+        captureImage = (ImageButton) view_res.findViewById(R.id.btn_image_capture);
+        viewImage = (ImageView) view_res.findViewById(R.id.img_capture);
     }
 
     public Boolean fieldValidation() {
@@ -194,6 +220,44 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
 
         }
         return validated;
+    }
+
+    // Displays the dialog for selecting/capturing image.
+    private void selectImageDialog() {
+
+        Log.d("PAWED", "Ishita: Inside selectImage");
+
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder((Context) getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    Log.d("PAWED", "Ishita: Option Take Photo");
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Log.d("PAWED", "Ishita: Option Choose from Gallery");
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                    startActivityForResult(intent, 2);
+
+                }
+                else if (options[item].equals("Cancel")) {
+                    Log.d("PAWED", "Ishita: Cancel");
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 }
 
