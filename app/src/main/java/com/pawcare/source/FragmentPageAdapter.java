@@ -1,4 +1,4 @@
-package com.example.anm.uitest1;
+package com.pawcare.source;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

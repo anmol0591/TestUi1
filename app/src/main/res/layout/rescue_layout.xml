@@ -38,28 +38,35 @@
         android:layout_below="@+id/type"
         android:layout_alignStart="@+id/type" />
 
-    <TextView
+    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:hint="Location"
-        android:id="@+id/location"
+        android:id="@+id/txt_location"
         android:layout_marginTop="30dp"
         android:background="@drawable/back"
+        android:editable="true"
+        android:singleLine="true"
+        android:inputType="text"
+        android:focusable="true"
+        android:clickable="true"
+        android:cursorVisible="true"
         android:layout_below="@+id/condition"
         android:layout_alignStart="@+id/condition"
-        android:layout_alignEnd="@+id/imageView2" />
+        android:layout_alignEnd="@+id/imageView2"
+        />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/location_icon"
-        android:id="@+id/button"
+        android:id="@+id/btn_location"
         android:layout_alignEnd="@+id/condition"
-        android:layout_toEndOf="@+id/location"
-        android:layout_alignTop="@+id/location"
-        android:layout_alignBottom="@+id/location" />
+        android:layout_toEndOf="@+id/txt_location"
+        android:layout_alignTop="@+id/txt_location"
+        android:layout_alignBottom="@+id/txt_location" />
 
     <TextView
         android:layout_width="250dp"
@@ -67,9 +74,8 @@
         android:hint="More Informations"
         android:id="@+id/textView"
         android:background="@drawable/back"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/location"
-        android:layout_alignStart="@+id/location" />
+        android:layout_below="@+id/txt_location"
+        android:layout_alignStart="@+id/txt_location" />
 
     <Button
         android:layout_width="250dp"
