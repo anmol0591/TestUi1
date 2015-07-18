@@ -61,6 +61,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     View view_res;
     protected LocationManager locationManager;
     Location location;
+    String abc;
 
     @Override
     /**
