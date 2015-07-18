@@ -70,6 +70,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     protected LocationManager locationManager;
     ImageView viewImage;            // For capturing image
     ImageButton captureImage;       // Button for updating image
+    File imageFile;
 
     @Override
     /**
@@ -181,7 +182,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+            imageFile = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
         }
     }
 
