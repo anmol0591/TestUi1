@@ -66,6 +66,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
     @Override
     /**
      * creates and returns the view hierarchy associated with the fragment.
+     * comment
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
