@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.anm.uitest1.R;
 import com.pawcare.source.Rescue;
@@ -61,6 +62,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
     Button btnGPSShowLocation, btnRescue; // Button for GPS Location
     EditText tvAddress, et_more_info, et_email, et_type, et_condition, et_contact_number;
+    ProgressBar progressBar;
     String str_location;
     View view_res;
     protected LocationManager locationManager;
@@ -77,6 +79,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
         initializeUIElements();
+        progressBar.setVisibility(View.INVISIBLE);
+
 
         // Clicked add image button.
         captureImage.setOnClickListener(new View.OnClickListener() {
@@ -95,14 +99,19 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                 locationManager = (LocationManager) ((Context) getActivity()).getSystemService(Context.LOCATION_SERVICE);
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     LocationAddress locationAddress = new LocationAddress();
                     str_location = locationAddress.getAddressFromLocation(location.getLatitude(), location.getLongitude(), getActivity().getApplicationContext());
                     tvAddress.setText(str_location);
                 } else {
+
+
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         GPSEnableDialog gpsEnableDialog = new GPSEnableDialog();
                         gpsEnableDialog.show(getActivity().getSupportFragmentManager(), "gps_tag");
+
                     }
+                    progressBar.setVisibility(View.VISIBLE);
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 60, 20, RescueFragment.this);
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000 * 60, 20, RescueFragment.this);
 
@@ -161,6 +170,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
+            progressBar.setVisibility(View.INVISIBLE);
             this.location = location;
             Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
             LocationAddress locationAddress = new LocationAddress();
@@ -216,6 +226,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         et_more_info = (EditText) view_res.findViewById(R.id.et_more_info);
         captureImage = (ImageButton) view_res.findViewById(R.id.btn_image_capture);
         viewImage = (ImageView) view_res.findViewById(R.id.img_capture);
+        progressBar = (ProgressBar) view_res.findViewById(R.id.progressBar1);
     }
 
     public Boolean fieldValidation() {

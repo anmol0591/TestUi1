@@ -62,6 +62,17 @@
         android:layout_alignEnd="@+id/et_condition"
         android:layout_toEndOf="@+id/img_capture" />
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/et_condition" />
+        android:layout_alignBottom="@+id/txt_location"
+        android:layout_alignTop="@+id/txt_location"
+        android:layout_toEndOf="@+id/img_capture" />
+
+
     <EditText
         android:layout_width="250dp"
         android:layout_height="50dp"
