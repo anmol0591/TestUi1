@@ -18,7 +18,9 @@ android {
         }
     }
     sourceSets {
-        main { java.srcDirs = ['src/main/java', 'src/main/java/com.example.anm.uitest1/location'] }
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java/com.example.anm.uitest1/location', 'src/main/java/utilities', 'src/main/java/com/pawcare/source/utilities']
+        }
     }
 }
 

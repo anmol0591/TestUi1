@@ -27,7 +27,9 @@ import android.widget.TextView;
 import com.example.anm.uitest1.R;
 import com.pawcare.source.location.GPSEnableDialog;
 
+
 import com.pawcare.source.location.LocationAddress;
+import com.pawcare.source.util.ConfirmRescue;
 
 import java.util.Calendar;
 
@@ -55,13 +57,11 @@ Yosserian    07/17/15 - Implements Rescue Page
 */
 public class Rescue extends android.support.v4.app.Fragment implements LocationListener {
 
-    Button btnGPSShowLocation; // Button for GPS Location
-    TextView tvAddress;
+    Button btnGPSShowLocation, btnRescue; // Button for GPS Location
+    EditText tvAddress, et_more_info, et_email, et_type, et_condition, et_contact_number;
     String str_location;
     View view_res;
     protected LocationManager locationManager;
-    Location location;
-    String abc;
 
     @Override
     /**
@@ -70,8 +70,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
-        btnGPSShowLocation = (Button) view_res.findViewById(R.id.btn_location);
-        tvAddress = (EditText) view_res.findViewById(R.id.txt_location);
+        initializeUIElements();
 
         btnGPSShowLocation.setOnClickListener(new View.OnClickListener() {
 
@@ -98,6 +97,27 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
             }
 
         });
+        btnRescue.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Boolean validation = fieldValidation();
+                ConfirmRescue confirmRescue = new ConfirmRescue();
+                if (validation == true) {
+
+                    //do something
+                    confirmRescue.setMessage("Are you sure about rescuing this animal?");
+                    confirmRescue.show(getActivity().getSupportFragmentManager(), "alert");
+
+                } else {
+                    //parse rescue
+                }
+
+
+            }
+        });
+
         return view_res;
     }
 
@@ -138,6 +158,42 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
 
+    }
+
+    public void initializeUIElements() {
+        btnGPSShowLocation = (Button) view_res.findViewById(R.id.btn_location);
+        btnRescue = (Button) view_res.findViewById(R.id.btn_rescue);
+        tvAddress = (EditText) view_res.findViewById(R.id.txt_location);
+        et_type = (EditText) view_res.findViewById(R.id.et_type);
+        et_email = (EditText) view_res.findViewById(R.id.et_email);
+        et_contact_number = (EditText) view_res.findViewById(R.id.et_contact_number);
+        et_condition = (EditText) view_res.findViewById(R.id.et_condition);
+        et_more_info = (EditText) view_res.findViewById(R.id.et_more_info);
+
+    }
+
+    public Boolean fieldValidation() {
+        Boolean validated = true;
+        if (et_type.getText().toString().length() == 0 || et_type == null) {
+            validated = false;
+            et_type.setError("Animal Type is required!");
+
+        } else if (et_condition.getText().toString().length() == 0 || et_type == null) {
+            validated = false;
+            et_condition.setError("Animal Condition is required!");
+        } else if (tvAddress.getText().toString().length() == 0 || tvAddress == null) {
+            validated = false;
+            tvAddress.setError("Location is required!");
+        } else if (et_email.getText().toString().length() == 0 || !et_email.getText().toString().contains("@")) {
+            validated = false;
+            et_email.setError("Email id is invalid!");
+
+        } else if (et_contact_number.getText().toString().length() != 10) {
+            validated = false;
+            et_contact_number.setError("Contact Number is invalid!");
+
+        }
+        return validated;
     }
 }
 

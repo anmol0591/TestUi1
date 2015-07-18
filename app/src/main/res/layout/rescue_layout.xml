@@ -4,7 +4,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
 
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="100dp"
@@ -18,44 +17,39 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Enter Type e.g Dog, Cat"
-        android:background="@drawable/back"
-        android:id="@+id/type"
+        android:id="@+id/et_type"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true" />
-    <TextView
+    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Enter Condition"
-        android:background="@drawable/back"
-        android:id="@+id/condition"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/type"
-        android:layout_alignStart="@+id/type" />
+        android:id="@+id/et_condition"
+        android:layout_below="@+id/et_type"
+        android:layout_alignStart="@+id/et_type" />
 
     <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Location"
         android:id="@+id/txt_location"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/back"
         android:editable="true"
         android:singleLine="true"
         android:inputType="text"
         android:focusable="true"
         android:clickable="true"
         android:cursorVisible="true"
-        android:layout_below="@+id/condition"
-        android:layout_alignStart="@+id/condition"
-        android:layout_alignEnd="@+id/imageView2"
-        />
+        android:layout_below="@+id/et_condition"
+        android:layout_alignStart="@+id/et_condition"
+        android:layout_toStartOf="@+id/btn_location"
+        android:layout_alignEnd="@+id/et_condition" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -63,17 +57,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/location_icon"
         android:id="@+id/btn_location"
-        android:layout_alignEnd="@+id/condition"
-        android:layout_toEndOf="@+id/txt_location"
+        android:layout_alignBottom="@+id/txt_location"
         android:layout_alignTop="@+id/txt_location"
-        android:layout_alignBottom="@+id/txt_location" />
+        android:layout_alignEnd="@+id/et_condition"
+        android:layout_toEndOf="@+id/imageView2" />
 
-    <TextView
+    <EditText
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:hint="More Informations"
-        android:id="@+id/textView"
-        android:background="@drawable/back"
+        android:inputType="textMultiLine"
+        android:id="@+id/et_more_info"
         android:layout_below="@+id/txt_location"
         android:layout_alignStart="@+id/txt_location" />
 
@@ -81,9 +75,29 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="Rescue"
-        android:id="@+id/button2"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:id="@+id/btn_rescue"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/et_more_info" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Email ID"
+        android:id="@+id/et_email"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/et_more_info"
+        android:layout_alignStart="@+id/et_more_info"
+        android:layout_alignEnd="@+id/et_more_info" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Contact Number "
+        android:id="@+id/et_contact_number"
+        android:layout_alignEnd="@+id/et_email"
+        android:inputType="phone"
+        android:layout_below="@+id/et_email"
+        android:layout_alignStart="@+id/et_email" />
 </RelativeLayout>
