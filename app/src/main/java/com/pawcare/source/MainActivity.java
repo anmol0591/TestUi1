@@ -15,6 +15,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     FragmentPageAdapter fragmentPageAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        InitializeParse initializeParse = new InitializeParse();
+        initializeParse.execute(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewPager= (ViewPager)findViewById(R.id.pager);
