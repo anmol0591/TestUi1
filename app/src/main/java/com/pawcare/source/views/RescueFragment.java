@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -75,6 +76,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     ImageView viewImage;            // For capturing image
     ImageButton captureImage;       // Button for updating image
     byte[] imageBytes;
+    Bitmap imageBitmap;
+    int request;
     private Location location = null;
 
     @Override
@@ -235,7 +238,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            imageBytes = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+            imageBitmap = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+            request = requestCode;
         }
     }
 

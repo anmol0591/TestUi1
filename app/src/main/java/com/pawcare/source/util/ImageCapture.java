@@ -28,8 +28,9 @@ public class ImageCapture {
      * @param context
      * @param requestCode
      */
-    public static byte[] displayImage(ImageView viewImage, Intent data,final Context context, int requestCode) {
+    public static Bitmap displayImage(ImageView viewImage, Intent data,final Context context, int requestCode) {
         byte[] imageBytes = null;
+        Bitmap returnBitmap = null;
         File f = null;
         if (requestCode == 1) {
             Log.d("PAWED", "Ishita: Option Take Photo is selected. Save new.");
@@ -58,11 +59,13 @@ public class ImageCapture {
 
                 } else {
                     viewImage.setImageBitmap(bitmap);
+
                     Log.d("PAWED", "Ishita: No need to resize.");
                 }
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+       /*       ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                imageBytes = stream.toByteArray();
+                imageBytes = stream.toByteArray(); */
+                returnBitmap = bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,14 +83,14 @@ public class ImageCapture {
                 viewImage.setImageBitmap(bitmap);
 
                 Log.d("PAWED", "Ishita: Bitmap too large. Resizing.");
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            /*  ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                imageBytes = stream.toByteArray();
-
+                imageBytes = stream.toByteArray(); */
+                returnBitmap = bitmap;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return imageBytes;
+        return returnBitmap;
     }
 }
