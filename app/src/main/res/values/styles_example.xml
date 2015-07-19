@@ -11,20 +11,24 @@
         <item name="actionBarStyle">@style/ActionBar.Solid.Example</item>
         <item name="actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
-        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
-        <item name="android:actionMenuTextColor">@color/white</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
     </style>
 
-    <style name="MyActionBarTabText"  parent="@style/Widget.AppCompat.Light.ActionBar.TabText">
-        <item name="android:textColor">@color/white</item>
-    </style>
+
 
     <style name="ActionBar.Solid.Example" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_example</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_example</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_example</item>
+        <item name="logo">@mipmap/ic_launcher</item>
+        <item name="displayOptions">useLogo|showTitle|showHome</item>
         <item name="progressBarStyle">@style/ProgressBar.Example</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText"  parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ActionBar.Transparent.Example" parent="@style/Widget.AppCompat.Light.ActionBar">
@@ -42,6 +46,7 @@
 
     <style name="ActionBarTabStyle.Example" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_example</item>
+
     </style>
 
     <style name="DropDownNav.Example" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
