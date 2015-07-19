@@ -1,18 +1,25 @@
 package com.pawcare.source.views;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +37,9 @@ import com.pawcare.source.location.GPSEnableDialog;
 import com.pawcare.source.location.LocationAddress;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
+
 import java.io.File;
+
 
 /*
 NAME
@@ -77,7 +86,26 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         initializeUIElements();
         progressBar.setVisibility(View.INVISIBLE);
 
-
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(getActivity().getApplicationContext()).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                et_email.setText(possibleEmail);
+            }
+            if(phonePattern.matcher(account.name).matches())
+            {
+                String possibleContact = account.name;
+                et_contact_number.setText(possibleContact);
+            }
+        }
+        TelephonyManager tm = (TelephonyManager)(getActivity().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE));
+        String number = tm.getLine1Number();
+        if(number!=null)
+        {
+            et_contact_number.setText(number);
+        }
         // Clicked add image button.
         captureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,11 +240,29 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         btnRescue = (Button) view_res.findViewById(R.id.btn_rescue);
         btnRescue.setAllCaps(false);
         tvAddress = (EditText) view_res.findViewById(R.id.txt_location);
+        tvAddress.setTextColor(Color.parseColor("#909090"));
+        tvAddress.setHint(Html.fromHtml("<small><b>" + "Tap to enter location" + "</b></small>"));
+
         et_type = (EditText) view_res.findViewById(R.id.et_type);
+        et_type.setTextColor(Color.parseColor("#909090"));
+        et_type.setHint(Html.fromHtml("<small><b>" + "Enter Type e.g. Dog, Cat etc" + "</b></small>"));
+
         et_email = (EditText) view_res.findViewById(R.id.et_email);
+        et_email.setTextColor(Color.parseColor("#909090"));
+        et_email.setHint(Html.fromHtml("<small><b>" + "Enter Email Address" + "</b></small>"));
+
         et_contact_number = (EditText) view_res.findViewById(R.id.et_contact_number);
+        et_contact_number.setTextColor(Color.parseColor("#909090"));
+        et_contact_number.setHint(Html.fromHtml("<small><b>" + "Enter Contact Number" + "</b></small>"));
+
         et_condition = (EditText) view_res.findViewById(R.id.et_condition);
+        et_condition.setTextColor(Color.parseColor("#909090"));
+        et_condition.setHint(Html.fromHtml("<small><b>" + "Enter condition" + "</b></small>"));
+
         et_more_info = (EditText) view_res.findViewById(R.id.et_more_info);
+        et_more_info.setTextColor(Color.parseColor("#909090"));
+        et_more_info.setHint(Html.fromHtml("<small><b>" + "More information" + "</b></small>"));
+
         captureImage = (ImageButton) view_res.findViewById(R.id.btn_image_capture);
         viewImage = (ImageView) view_res.findViewById(R.id.img_capture);
         progressBar = (ProgressBar) view_res.findViewById(R.id.progressBar1);
@@ -284,3 +330,11 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         builder.show();
     }
 }
+
+
+
+
+
+
+
+

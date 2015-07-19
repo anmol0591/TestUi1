@@ -13,6 +13,7 @@
         <item name="actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
+        <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
     </style>
 
 

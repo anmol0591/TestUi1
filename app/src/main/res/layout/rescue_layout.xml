@@ -23,6 +23,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Enter Type e.g Dog, Cat"
         android:id="@+id/et_type"
+        android:inputType="textPersonName"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:textColorHint="#d3d3d3"
         android:layout_below="@+id/img_capture"
         android:layout_centerHorizontal="true"
         android:maxLines="1"
@@ -34,7 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Enter Condition"
         android:id="@+id/et_condition"
+        android:textColorHint="#d3d3d3"
+        android:inputType="textPersonName"
         android:layout_below="@+id/et_type"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"/>
 
     <EditText
@@ -45,18 +53,21 @@
         android:id="@+id/txt_location"
         android:editable="true"
         android:singleLine="true"
-        android:inputType="text"
+        android:inputType="textPostalAddress"
         android:focusable="true"
+        android:textColorHint="#d3d3d3"
         android:clickable="true"
         android:cursorVisible="true"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/et_condition"
         android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/location_icon"
+        android:layout_width="15dp"
+        android:layout_height="5dp"
+        android:background="@drawable/loc"
         android:id="@+id/btn_location"
         android:layout_alignBottom="@+id/txt_location"
         android:layout_alignTop="@+id/txt_location"
@@ -72,13 +83,17 @@
         android:layout_alignTop="@+id/txt_location"
         android:layout_centerHorizontal="true" />
 
+
     <EditText
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:hint="More Information"
-        android:inputType="textMultiLine"
+        android:inputType="textPersonName"
         android:id="@+id/et_more_info"
+        android:textColorHint="#d3d3d3"
         android:layout_below="@+id/txt_location"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -86,12 +101,15 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Email ID"
+        android:textColorHint="#d3d3d3"
         android:id="@+id/et_email"
         android:inputType="textEmailAddress"
         android:layout_below="@+id/et_more_info"
         android:layout_alignRight="@+id/et_more_info"
         android:layout_alignEnd="@+id/et_more_info"
         android:layout_alignLeft="@+id/et_more_info"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_alignStart="@+id/et_more_info" />
 
     <EditText
@@ -101,9 +119,12 @@
         android:hint="Contact Number "
         android:id="@+id/et_contact_number"
         android:inputType="phone"
+        android:textColorHint="#d3d3d3"
         android:layout_below="@+id/et_email"
         android:layout_alignRight="@+id/et_email"
         android:layout_alignEnd="@+id/et_email"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_alignLeft="@+id/et_email"
         android:layout_alignStart="@+id/et_email" />
 
@@ -122,6 +143,7 @@
         android:layout_height="wrap_content"
         android:text="Rescue"
         android:id="@+id/btn_rescue"
+        android:layout_margin="8sp"
         android:layout_below="@+id/et_contact_number"
         android:background="@drawable/ab_solid_example"
         android:textColor="#FFFFFF"
