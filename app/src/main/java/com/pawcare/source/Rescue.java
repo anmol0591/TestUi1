@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -36,7 +37,12 @@ import com.pawcare.source.location.LocationAddress;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 
 /*
@@ -239,6 +245,7 @@ public class Rescue extends android.support.v4.app.Fragment implements LocationL
                 if (options[item].equals("Take Photo"))
                 {
                     Log.d("PAWED", "Ishita: Option Take Photo");
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
