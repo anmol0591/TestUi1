@@ -39,6 +39,7 @@ import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 
 /*

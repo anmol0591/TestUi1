@@ -145,10 +145,11 @@
         android:id="@+id/btn_rescue"
         android:layout_margin="8sp"
         android:layout_below="@+id/et_contact_number"
-        android:background="@drawable/ab_solid_example"
+        android:background="@drawable/rescuebutton"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end" />
 
 </RelativeLayout>
