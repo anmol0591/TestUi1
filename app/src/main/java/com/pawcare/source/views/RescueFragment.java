@@ -39,6 +39,7 @@ import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 
 /*
@@ -174,6 +175,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                     }
 
                     confirmRescue.rescue = rescue;
+                    //getActivity().setContentView(R.layout.rescue_layout);
 
                 } else {
                     //parse rescue

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.anm.uitest1.R;
 import com.pawcare.source.Rescue;
 
 /**
@@ -29,7 +30,7 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        FragmentActivity act = getActivity();
+        final FragmentActivity act = getActivity();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(act);
         alertDialog.setTitle("PawCare");
         alertDialog.setMessage(message);
@@ -49,6 +50,8 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                             toast = Toast.makeText(getActivity().getApplicationContext(),"Error in sending request. Please try again.",Toast.LENGTH_LONG);
                         }
                         toast.show();
+
+
 
                     }
                 });
