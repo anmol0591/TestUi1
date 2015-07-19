@@ -218,6 +218,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void initializeUIElements() {
         btnGPSShowLocation = (Button) view_res.findViewById(R.id.btn_location);
         btnRescue = (Button) view_res.findViewById(R.id.btn_rescue);
+        btnRescue.setAllCaps(false);
         tvAddress = (EditText) view_res.findViewById(R.id.txt_location);
         et_type = (EditText) view_res.findViewById(R.id.et_type);
         et_email = (EditText) view_res.findViewById(R.id.et_email);
