@@ -9,13 +9,19 @@
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Example</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Example</item>
         <item name="actionBarStyle">@style/ActionBar.Solid.Example</item>
+        <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
         <item name="actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
     </style>
 
 
-
+    <style name="MyActionBarTabText"   parent="@style/Widget.AppCompat.Light.ActionBar.TabText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
     <style name="ActionBar.Solid.Example" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_example</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_example</item>
