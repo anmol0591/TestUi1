@@ -124,6 +124,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             @Override
             public void onClick(View arg0) {
 
+                progressBar.setVisibility(View.VISIBLE);
                 locationManager = (LocationManager) ((Context) getActivity()).getSystemService(Context.LOCATION_SERVICE);
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
@@ -132,8 +133,6 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                     str_location = locationAddress.getAddressFromLocation(location.getLatitude(), location.getLongitude(), getActivity().getApplicationContext());
                     tvAddress.setText(str_location);
                 } else {
-
-
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         GPSEnableDialog gpsEnableDialog = new GPSEnableDialog();
                         gpsEnableDialog.show(getActivity().getSupportFragmentManager(), "gps_tag");
@@ -178,6 +177,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                     }
 
                     confirmRescue.rescue = rescue;
+                    //getActivity().setContentView(R.layout.rescue_layout);
 
                 } else {
                     //parse rescue
@@ -202,6 +202,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             tvAddress.setText(str_location);
 
             locationManager.removeUpdates(this);
+        }
+        else {
+            progressBar.setVisibility(View.VISIBLE);
         }
 
     }
