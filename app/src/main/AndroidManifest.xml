@@ -15,8 +15,9 @@
     
     <application
         android:allowBackup="true"
-        android:icon="@drawable/paw"
+        android:icon="@mipmap/ic_launcher"
         android:label="Paw Care"
+
         android:theme="@style/Theme.Example" >
         <activity
             android:name="com.pawcare.source.MainActivity"
