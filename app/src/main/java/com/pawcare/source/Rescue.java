@@ -34,6 +34,8 @@ Mail
     public static final String RESCUE_IMAGE_FILE = "ImageFile";
     public static final String RESCUE_LOCATION = "Location";
     public static final String RESCUE_PHONE = "Phone";
+    public static final String RESCUE_TABLE = "Rescue";
+    public static final String RESCUE_IMAGE_NAME = "RescueImage.jpg";
 
     private String type;
     private String condition;
@@ -111,46 +113,67 @@ Mail
 
     public boolean persist()
     {
-        Log.d("PAWED","persist");
-        ParseObject rescue = new ParseObject("Rescue");
+        ParseObject rescue = new ParseObject(RESCUE_TABLE);
         rescue.put(RESCUE_CONDITION,condition);
-        rescue.put(RESCUE_ADDRESS,address);
-        ParseGeoPoint rescueLocation = new ParseGeoPoint(location.getLatitude(),location.getLongitude());
-        rescue.put(RESCUE_LOCATION,rescueLocation);
-        rescue.put(RESCUE_MAIL,mail);
-        rescue.put(RESCUE_MORE_INFO,moreInfo);
+        if (address != null){
+            rescue.put(RESCUE_ADDRESS,address);
+        }
+        if (location != null){
+            ParseGeoPoint rescueLocation = new ParseGeoPoint(location.getLatitude(),location.getLongitude());
+            rescue.put(RESCUE_LOCATION,rescueLocation);
+        }
+        if (mail != null){
+            rescue.put(RESCUE_MAIL,mail);
+        }
+        if (phone != null){
+            rescue.put(RESCUE_PHONE, phone);
+        }
+        if (moreInfo != null){
+            rescue.put(RESCUE_MORE_INFO,moreInfo);
+        }
         rescue.put(RESCUE_TYPE,type);
         if (imageFile != null){
             Log.d("PAWED", "setting image parse file");
-            rescue.put(RESCUE_IMAGE_FILE, new ParseFile("rescueImage.jpg",imageFile));
+            rescue.put(RESCUE_IMAGE_FILE, new ParseFile(RESCUE_IMAGE_NAME,imageFile));
         }
-        int x;
-        Log.d("PAWED", "CLOSE " + toString());
-        rescue.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.d("PAWED","PE "+e.toString());
-                }
-            }
-        });
-        return true;
+        try {
+            rescue.save();
+            return true;
+        }catch (Exception e){
+            Log.d("PAWED",e.toString());
+            // if it is a network error then we can use saveEventually which will send the data
+            // to parse whenever the network becomes available
+            return false;
+        }
     }
 
     @Override
     public String toString() {
-        Log.d("PAWED","inTS");
-//        String str = "Rescue{" +
-//                "type='" + type + '\'' +
-//                ", condition='" + condition + '\'' +
-//                ", moreInfo='" + moreInfo + '\'' +
-//                ", address='" + address + '\'' +
-//                ", mail='" + mail + '\'' +
-//                ", phone='" + phone + '\'' +
-//                ", imageFile=" + Arrays.toString(imageFile) +
-//                ", location=" + location +
-//                '}';
-        Log.d("PAWED","printed");
-        return "";
+        String string = "";
+        if (type != null){
+            string += type;
+        }
+        if (condition != null){
+            string += condition;
+        }
+        if (moreInfo != null){
+            string += type;
+        }
+        if (address != null){
+            string += address;
+        }
+        if (mail != null){
+            string += mail;
+        }
+        if (phone != null){
+            string += phone;
+        }
+        if (imageFile != null){
+            string += imageFile.toString();
+        }
+        if (location != null){
+            string += location.toString();
+        }
+        return string;
     }
 }
