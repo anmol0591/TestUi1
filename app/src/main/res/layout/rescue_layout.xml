@@ -24,7 +24,10 @@
         android:hint="Enter Type e.g Dog, Cat"
         android:id="@+id/et_type"
         android:layout_below="@+id/img_capture"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:lines="1"
+        />
     <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -76,19 +79,11 @@
     <EditText
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:hint="More Informations"
+        android:hint="More Information"
         android:inputType="textMultiLine"
         android:id="@+id/et_more_info"
         android:layout_below="@+id/txt_location"
         android:layout_alignStart="@+id/txt_location" />
-
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:text="Rescue"
-        android:id="@+id/btn_rescue"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/et_more_info" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -121,4 +116,16 @@
         android:layout_gravity="center_horizontal"
         android:background="@android:color/transparent"
         android:src="@android:drawable/ic_menu_edit" />
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Rescue"
+        android:id="@+id/btn_rescue"
+        android:layout_alignStart="@+id/et_contact_number"
+        android:layout_below="@+id/et_contact_number"
+        android:background="@drawable/ab_solid_example"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        />
 </RelativeLayout>
