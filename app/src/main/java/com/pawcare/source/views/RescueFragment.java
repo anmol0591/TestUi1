@@ -38,11 +38,8 @@ import com.pawcare.source.location.LocationAddress;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilterInputStream;
-import java.util.regex.Pattern;
+
 
 /*
 NAME
@@ -76,7 +73,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     protected LocationManager locationManager;
     ImageView viewImage;            // For capturing image
     ImageButton captureImage;       // Button for updating image
-    File imageFile;
+    byte[] imageBytes;
     private Location location = null;
 
     @Override
@@ -166,13 +163,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                     rescue.setMail(et_email.getText().toString());
                     rescue.setLocation(RescueFragment.this.location);
                     rescue.setPhone(et_contact_number.getText().toString());
-                    if (imageFile != null){
+                    if (imageBytes != null){
                         try{
                             Log.d("PAWED", "image file is not null");
-                            byte[] imageBytes = new byte[(int)imageFile.length()];
-                            BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(imageFile));
-                            inputStream.read(imageBytes,0,imageBytes.length);
-                            Log.d("PAWED", "converted" + imageBytes.length);
                             Log.d("PAWED","byte array"+imageBytes.toString());
                             rescue.setImageFile(imageBytes);
                         }catch (Exception e){
@@ -238,7 +231,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            imageFile = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+            imageBytes = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
         }
     }
 

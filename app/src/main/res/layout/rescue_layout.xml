@@ -21,6 +21,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Enter Type e.g Dog, Cat"
         android:id="@+id/et_type"
         android:inputType="textPersonName"
         android:ellipsize="start"
@@ -149,4 +150,5 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

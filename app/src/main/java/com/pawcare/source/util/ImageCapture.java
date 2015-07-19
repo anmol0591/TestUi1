@@ -9,8 +9,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+
 
 
 /**
@@ -25,7 +28,8 @@ public class ImageCapture {
      * @param context
      * @param requestCode
      */
-    public static File displayImage(ImageView viewImage, Intent data,final Context context, int requestCode) {
+    public static byte[] displayImage(ImageView viewImage, Intent data,final Context context, int requestCode) {
+        byte[] imageBytes = null;
         File f = null;
         if (requestCode == 1) {
             Log.d("PAWED", "Ishita: Option Take Photo is selected. Save new.");
@@ -56,6 +60,9 @@ public class ImageCapture {
                     viewImage.setImageBitmap(bitmap);
                     Log.d("PAWED", "Ishita: No need to resize.");
                 }
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                imageBytes = stream.toByteArray();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,24 +77,17 @@ public class ImageCapture {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), selectedImage);
 
-                int height = bitmap.getHeight(), width = bitmap.getWidth();
+                viewImage.setImageBitmap(bitmap);
 
-                if (height > 1280 && width > 960) {
-                    Bitmap displayBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
-                    viewImage.setImageBitmap(displayBitmap);
-
-                    Log.d("PAWED", "Ishita: Bitmap too large. Resizing.");
-
-                } else {
-                    viewImage.setImageBitmap(bitmap);
-                    Log.d("PAWED", "Ishita: No need to resize.");
-                }
+                Log.d("PAWED", "Ishita: Bitmap too large. Resizing.");
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                imageBytes = stream.toByteArray();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            viewImage.setImageBitmap(bitmap);
         }
-        return f;
+        return imageBytes;
     }
 }
