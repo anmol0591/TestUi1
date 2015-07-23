@@ -7,9 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -18,21 +21,13 @@ import com.parse.ParseObject;
 import com.parse.ParseSession;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 /**
  * Created by anmumukh on 7/18/15.
  */
 public class Rescue {
-    /*
-    Condition
-Location GeoPoint
-Type
-ImageFile
-MoreInfo
-Address
-Mail
-     */
     public static final String RESCUE_TYPE = "Type";
     public static final String RESCUE_CONDITION = "Condition";
     public static final String RESCUE_MORE_INFO = "MoreInfo";
@@ -49,6 +44,21 @@ Mail
     private String moreInfo;
     private String address;
     private String mail;
+
+    public PersistCallback callback;
+
+
+
+    public Bitmap getImageMap() {
+        return imageMap;
+    }
+
+    public void setImageMap(Bitmap imageMap) {
+
+        this.imageMap = imageMap;
+    }
+
+    private Bitmap imageMap;
 
     public String getPhone() {
         return phone;
@@ -143,15 +153,14 @@ Mail
             Log.d("PAWED", "setting image parse file");
             rescue.put(RESCUE_IMAGE_FILE, new ParseFile(RESCUE_IMAGE_NAME,imageFile));
         }
-        try {
-            rescue.save();
-            return true;
-        }catch (Exception e){
-            Log.d("PAWED",e.toString());
-            // if it is a network error then we can use saveEventually which will send the data
-            // to parse whenever the network becomes available
-            return false;
-        }
+        Log.d("PAWED","Save in background");
+        rescue.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Rescue.this.callback.persisted(e);
+            }
+        });
+        return true;
     }
 
     @Override
@@ -184,3 +193,5 @@ Mail
         return string;
     }
 }
+
+
