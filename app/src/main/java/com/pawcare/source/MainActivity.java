@@ -3,15 +3,20 @@ package com.pawcare.source;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.pawcare.source.views.RescueFragment;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -95,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                NavUtils.navigateUpTo(this, getIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -113,4 +118,3 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 }
-

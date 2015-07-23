@@ -34,7 +34,6 @@ Address
 Mail
      */
     public static final String RESCUE_TYPE = "Type";
-    public static final String RESCUE_CONDITION = "Condition";
     public static final String RESCUE_MORE_INFO = "MoreInfo";
     public static final String RESCUE_ADDRESS = "Address";
     public static final String RESCUE_MAIL = "Mail";
@@ -45,7 +44,7 @@ Mail
     public static final String RESCUE_IMAGE_NAME = "RescueImage.jpg";
 
     private String type;
-    private String condition;
+
     private String moreInfo;
     private String address;
     private String mail;
@@ -68,14 +67,6 @@ Mail
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
     }
 
     public String getMoreInfo() {
@@ -121,7 +112,6 @@ Mail
     public boolean persist()
     {
         ParseObject rescue = new ParseObject(RESCUE_TABLE);
-        rescue.put(RESCUE_CONDITION,condition);
         if (address != null){
             rescue.put(RESCUE_ADDRESS,address);
         }
@@ -159,9 +149,6 @@ Mail
         String string = "";
         if (type != null){
             string += type;
-        }
-        if (condition != null){
-            string += condition;
         }
         if (moreInfo != null){
             string += type;

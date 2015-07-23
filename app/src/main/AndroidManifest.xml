@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.anm.uitest1" >
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.Loca" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -14,7 +14,7 @@
     <uses-feature android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <uses-sdk android:minSdkVersion="14" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,17 +22,24 @@
 
         android:theme="@style/Theme.Example" >
         <activity
-            android:name="com.pawcare.source.MainActivity"
+            android:name="com.pawcare.source.views.SplashActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pawcare.source.MainActivity" />
+                android:value="com.pawcare.source.views.SplashActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.pawcare.source.MainActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/app_name"   android:screenOrientation="portrait" >
         </activity>
     </application>
 

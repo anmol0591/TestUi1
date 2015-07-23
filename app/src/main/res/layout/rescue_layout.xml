@@ -1,8 +1,11 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#FFFFFF"
     android:layout_width="match_parent" android:layout_height="match_parent" >
-
 
     <ImageView
         android:id="@+id/img_capture"
@@ -15,7 +18,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_centerHorizontal="true"
-        android:focusableInTouchMode="true" />
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="250dp"
@@ -31,19 +35,7 @@
         android:layout_centerHorizontal="true"
         android:maxLines="1"
         android:lines="1"
-        />
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="Enter Condition"
-        android:id="@+id/et_condition"
-        android:textColorHint="#d3d3d3"
-        android:inputType="textPersonName"
-        android:layout_below="@+id/et_type"
-        android:ellipsize="start"
-        android:gravity="center_horizontal"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginBottom="10dp" />
 
     <EditText
         android:layout_width="250dp"
@@ -60,8 +52,9 @@
         android:cursorVisible="true"
         android:ellipsize="start"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/et_condition"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/et_type"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -70,11 +63,11 @@
         android:background="@drawable/ic_location"
         android:id="@+id/btn_location"
         android:layout_alignBottom="@+id/txt_location"
-        android:layout_alignTop="@+id/txt_location"
-        android:layout_toRightOf="@+id/et_condition"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/txt_location" />
+        android:layout_toRightOf="@+id/txt_location"
+        android:layout_toEndOf="@+id/txt_location"
+        android:layout_below="@+id/et_type" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
@@ -83,13 +76,13 @@
         android:layout_height="25dp"
         android:indeterminate="false"
         android:layout_alignTop="@+id/txt_location"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
 
     <EditText
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:hint="More Information"
+        android:hint="Description e.g condition"
         android:inputType="textPersonName"
         android:id="@+id/et_more_info"
         android:textColorHint="#d3d3d3"
@@ -106,13 +99,14 @@
         android:textColorHint="#d3d3d3"
         android:id="@+id/et_email"
         android:inputType="textEmailAddress"
-        android:layout_below="@+id/et_more_info"
-        android:layout_alignRight="@+id/et_more_info"
-        android:layout_alignEnd="@+id/et_more_info"
-        android:layout_alignLeft="@+id/et_more_info"
         android:ellipsize="start"
         android:gravity="center_horizontal"
-        android:layout_alignStart="@+id/et_more_info" />
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/et_more_info"
+        android:layout_alignStart="@+id/et_more_info"
+        android:layout_alignRight="@+id/et_more_info"
+        android:layout_alignEnd="@+id/et_more_info"
+        android:layout_marginBottom="10dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -122,13 +116,14 @@
         android:id="@+id/et_contact_number"
         android:inputType="phone"
         android:textColorHint="#d3d3d3"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/et_email"
         android:layout_alignRight="@+id/et_email"
         android:layout_alignEnd="@+id/et_email"
-        android:ellipsize="start"
-        android:gravity="center_horizontal"
-        android:layout_alignLeft="@+id/et_email"
-        android:layout_alignStart="@+id/et_email" />
+        android:layout_marginBottom="20dp"
+        android:layout_alignLeft="@+id/img_capture"
+        android:layout_alignStart="@+id/img_capture" />
 
     <ImageButton
         android:layout_width="50dp"
@@ -145,13 +140,43 @@
         android:layout_height="wrap_content"
         android:text="Rescue"
         android:id="@+id/btn_rescue"
-        android:layout_margin="8sp"
-        android:layout_below="@+id/et_contact_number"
         android:background="@drawable/rescuebutton"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:ellipsize="end" />
+        android:textSize="30sp"
+        android:ellipsize="end"
+        android:layout_below="@+id/et_contact_number"
+        android:layout_alignLeft="@+id/et_email"
+        android:layout_alignStart="@+id/et_email" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/more_info"
+        android:id="@+id/textView"
+        android:clickable="true"
+        android:textColor="#D0D0D0"
+        android:layout_below="@+id/et_more_info"
+        android:layout_alignRight="@+id/et_email"
+        android:layout_alignEnd="@+id/et_email"
+        android:paddingBottom="10dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/isdCode"
+        android:inputType="phone"
+        android:textColor="#d3d3d3"
+        android:text="+91"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:layout_alignTop="@+id/et_contact_number"
+        android:layout_alignLeft="@+id/et_email"
+        android:layout_alignStart="@+id/et_email"
+        android:layout_toStartOf="@+id/et_contact_number"
+        android:layout_toLeftOf="@+id/et_contact_number"
+        android:editable="false"/>
 
 </RelativeLayout>
+    </ScrollView>
