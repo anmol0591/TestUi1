@@ -74,7 +74,7 @@
         android:layout_toRightOf="@+id/et_condition"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/txt_location"/>
+        android:layout_toEndOf="@+id/txt_location" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
