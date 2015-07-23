@@ -2,16 +2,22 @@ package com.pawcare.source.util;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
 import com.pawcare.source.Rescue;
+
+import java.util.logging.Handler;
 
 /**
  * Created by mur on 7/18/2015.
@@ -40,19 +46,9 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                         //dialog.cancel();
                         //PARSE
                         Toast toast = null;
-                        Log.d("PAWED", "before persist");
-                        Log.d("PAWED",rescue.toString());
-                        if (rescue.persist())
-                        {
-                            toast = Toast.makeText(getActivity().getApplicationContext(),"Rescue request sent.Thank you!!!",Toast.LENGTH_LONG);
-                        }
-                        else {
-                            toast = Toast.makeText(getActivity().getApplicationContext(),"Error in sending request. Please try again.",Toast.LENGTH_LONG);
-                        }
+                        toast = Toast.makeText(getActivity().getApplicationContext(),"Sending request to Rescuer",Toast.LENGTH_LONG);
                         toast.show();
-
-
-
+                        rescue.persist();
                     }
                 });
         alertDialog.setNegativeButton("Cancel",
@@ -66,3 +62,4 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
         return dialog;
     }
 }
+

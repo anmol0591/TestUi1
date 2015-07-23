@@ -30,17 +30,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.pawcare.source.GeoCodeCallback;
+import com.pawcare.source.PersistCallback;
 import com.pawcare.source.Rescue;
 import com.pawcare.source.location.GPSEnableDialog;
 
 
 import com.pawcare.source.location.LocationAddress;
+import com.pawcare.source.util.BitmapConverter;
+import com.pawcare.source.util.BitmapConverterCallback;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import android.view.animation.Animation;
@@ -87,6 +93,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     SharedPreferences sharedPreferences;
     Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
 
+    Rescue rescue = new Rescue();
     @Override
     /**
      * creates and returns the view hierarchy associated with the fragment.
@@ -129,15 +136,36 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
             @Override
             public void onClick(View arg0) {
-
+                RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
                 progressBar.setVisibility(View.VISIBLE);
+                RescueFragment.this.btnRescue.setEnabled(false);
                 locationManager = (LocationManager) ((Context) getActivity()).getSystemService(Context.LOCATION_SERVICE);
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location != null) {
-                    progressBar.setVisibility(View.INVISIBLE);
+                if (location != null && ((System.currentTimeMillis() - location.getTime()) < 30 * 60 * 1000) ) {
                     LocationAddress locationAddress = new LocationAddress();
-                    str_location = locationAddress.getAddressFromLocation(location.getLatitude(), location.getLongitude(), getActivity().getApplicationContext());
-                    tvAddress.setText(str_location);
+                    locationAddress.context = getActivity().getApplicationContext();
+                    locationAddress.execute(location.getLatitude(),location.getLongitude());
+                    locationAddress.callback = new GeoCodeCallback() {
+                        @Override
+                        public void convertedAddress(final String address) {
+                            try {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
+                                        RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
+                                        RescueFragment.this.btnRescue.setEnabled(true);
+                                        RescueFragment.this.tvAddress.setText(address);
+                                        RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                            }catch (Exception e){
+                                Log.d("PAWED",e.toString());
+                            }
+
+                        }
+                    };
                 } else {
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         GPSEnableDialog gpsEnableDialog = new GPSEnableDialog();
@@ -153,7 +181,6 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             }
 
         });
-
         btnRescue.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -165,28 +192,33 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
                     confirmRescue.setMessage("Are you sure about rescuing this animal?");
                     confirmRescue.show(getActivity().getSupportFragmentManager(), "alert");
-                    Rescue rescue = new Rescue();
+
                     rescue.setType(et_type.getText().toString());
                     rescue.setMoreInfo(et_more_info.getText().toString());
                     rescue.setAddress(tvAddress.getText().toString());
                     rescue.setMail(et_email.getText().toString());
                     rescue.setLocation(RescueFragment.this.location);
                     rescue.setPhone(et_contact_number.getText().toString());
-                    if (imageBytes != null) {
-                        try {
-                            Log.d("PAWED", "image file is not null");
-                            Log.d("PAWED", "byte array" + imageBytes.toString());
-                            rescue.setImageFile(imageBytes);
-                        } catch (Exception e) {
-                            Log.d("PAWED", "This is an error" + e.toString());
+                    rescue.callback = new PersistCallback() {
+                        @Override
+                        public void persisted(Exception e) {
+                            if (e != null){
+                                Toast toast = null;
+                                toast = Toast.makeText(getActivity().getApplicationContext(),"Error in sending rescue request. Try again.",Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                            else {
+                                Toast toast = null;
+                                toast = Toast.makeText(getActivity().getApplicationContext(),"Rescue request sent successfully. Thank you!!!",Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
-                    }
-
+                    };
                     confirmRescue.rescue = rescue;
                     //getActivity().setContentView(R.layout.rescue_layout);
 
                 } else {
-                    //parse rescue
+                    // do nothing right now, validation error message is shown bu each textfield
                 }
 
 
@@ -239,9 +271,28 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             this.location = location;
             Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
             LocationAddress locationAddress = new LocationAddress();
-            String str_location = locationAddress.getAddressFromLocation(location.getLatitude(), location.getLongitude(), getActivity().getApplicationContext());
-            tvAddress.setText(str_location);
-
+            locationAddress.context = getActivity().getApplicationContext();
+            locationAddress.execute(location.getLatitude(),location.getLongitude());
+            locationAddress.callback = new GeoCodeCallback() {
+                @Override
+                public void convertedAddress(final String address) {
+                    Log.d("PAWED", "this is a key" + address);
+                    try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
+                                RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
+                                RescueFragment.this.btnRescue.setEnabled(true);
+                                RescueFragment.this.tvAddress.setText(address);
+                                RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }catch (Exception e){
+                        Log.d("PAWED",e.toString());
+                    }
+                }
+            };
             locationManager.removeUpdates(this);
         }
         else {
@@ -280,7 +331,17 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             imageBitmap = ImageCapture.displayImage(viewImage, data, (Context) getActivity(), requestCode);
+            BitmapConverter converter = new BitmapConverter();
+            converter.bitmap = imageBitmap;
+            converter.request = requestCode;
             request = requestCode;
+            converter.callback = new BitmapConverterCallback() {
+                @Override
+                public void converted(byte[] imageBytes) {
+                    rescue.setImageFile(imageBytes);
+                }
+            };
+            converter.execute();
         }
     }
 
@@ -319,7 +380,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         Boolean validated = true;
         if (et_type.getText().toString().length() == 0 || et_type == null) {
             validated = false;
-            et_type.setError(Html.fromHtml("<small><font color=\"#00ccff\"" + "Animal Type is required!" + "</small>"));
+            et_type.setError("Animal Type is required!");
 
         } else if (tvAddress.getText().toString().length() == 0 || tvAddress == null) {
             validated = false;
@@ -371,6 +432,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         });
         builder.show();
     }
+
 
     public static void slide_down(Context ctx, View v) {
 

@@ -44,7 +44,7 @@ public class ImageCapture {
             try {
                 Bitmap bitmap;
                 BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                bitmapOptions.inSampleSize = 2;
+                bitmapOptions.inSampleSize = 5;
 
                 bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                         bitmapOptions);
@@ -76,12 +76,9 @@ public class ImageCapture {
             Bitmap bitmap = null;
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
             bitmapOptions.inSampleSize = 2;
-
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), selectedImage);
-
                 viewImage.setImageBitmap(bitmap);
-
                 Log.d("PAWED", "Ishita: Bitmap too large. Resizing.");
             /*  ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
