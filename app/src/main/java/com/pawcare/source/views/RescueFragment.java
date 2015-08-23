@@ -25,6 +25,9 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,8 +47,11 @@ import com.pawcare.source.util.BitmapConverter;
 import com.pawcare.source.util.BitmapConverterCallback;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
+import com.pawcare.source.util.MessageOKPopUp;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -79,7 +85,8 @@ Yosserian    07/17/15 - Implements RescueFragment Page
 public class RescueFragment extends android.support.v4.app.Fragment implements LocationListener {
 
     Button btnGPSShowLocation, btnRescue; // Button for GPS Location
-    EditText tvAddress, et_more_info, et_email, et_type, et_contact_number, et_isd;
+    EditText tvAddress, et_more_info, et_email, et_contact_number, et_isd;
+    AutoCompleteTextView et_type;
     ProgressBar progressBar;
     String str_location;
     View view_res;
@@ -87,11 +94,15 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     ImageView viewImage;            // For capturing image
     ImageButton captureImage;       // Button for updating image
     byte[] imageBytes;
+    ArrayAdapter<String> dropDownAdapter;
     Bitmap imageBitmap;
     int request;
     private Location location = null;
     SharedPreferences sharedPreferences;
     Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+    private static final String[] ANIMALS = new String[] {
+            "Cat", "Dog", "Pig", "Pigeon", "Bird"
+    };
 
     Rescue rescue = new Rescue();
     @Override
@@ -102,6 +113,13 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
         initializeUIElements();
+        et_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
+                String selection = (String)parent.getItemAtPosition(position);
+                et_type.setText(selection);
+                //TODO Do something with the selected text
+            }
+        });
         progressBar.setVisibility(View.INVISIBLE);
         et_email.setVisibility(View.GONE);
         et_contact_number.setVisibility(View.GONE);
@@ -188,35 +206,43 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
                 Boolean validation = fieldValidation();
                 ConfirmRescue confirmRescue = new ConfirmRescue();
+
                 if (validation == true) {
+                    List<String> lst_animals = Arrays.asList(ANIMALS);
+                    if(!lst_animals.contains(et_type.getText().toString()))
+                    {
+                        MessageOKPopUp msgpop = new MessageOKPopUp();
+                        msgpop.setMessage("We currently don't support rescue of " + et_type.getText() +" Soon, maybe!");
+                        msgpop.show(getActivity().getSupportFragmentManager(), "alert");
 
-                    confirmRescue.setMessage("Are you sure about rescuing this animal?");
-                    confirmRescue.show(getActivity().getSupportFragmentManager(), "alert");
+                    }
+                    else {
+                        confirmRescue.setMessage("Are you sure about rescuing this animal?");
+                        confirmRescue.show(getActivity().getSupportFragmentManager(), "alert");
 
-                    rescue.setType(et_type.getText().toString());
-                    rescue.setMoreInfo(et_more_info.getText().toString());
-                    rescue.setAddress(tvAddress.getText().toString());
-                    rescue.setMail(et_email.getText().toString());
-                    rescue.setLocation(RescueFragment.this.location);
-                    rescue.setPhone(et_contact_number.getText().toString());
-                    rescue.callback = new PersistCallback() {
-                        @Override
-                        public void persisted(Exception e) {
-                            if (e != null){
-                                Toast toast = null;
-                                toast = Toast.makeText(getActivity().getApplicationContext(),"Error in sending rescue request. Try again.",Toast.LENGTH_LONG);
-                                toast.show();
+                        rescue.setType(et_type.getText().toString());
+                        rescue.setMoreInfo(et_more_info.getText().toString());
+                        rescue.setAddress(tvAddress.getText().toString());
+                        rescue.setMail(et_email.getText().toString());
+                        rescue.setLocation(RescueFragment.this.location);
+                        rescue.setPhone(et_contact_number.getText().toString());
+                        rescue.callback = new PersistCallback() {
+                            @Override
+                            public void persisted(Exception e) {
+                                if (e != null) {
+                                    Toast toast = null;
+                                    toast = Toast.makeText(getActivity().getApplicationContext(), "Error in sending rescue request. Try again.", Toast.LENGTH_LONG);
+                                    toast.show();
+                                } else {
+                                    Toast toast = null;
+                                    toast = Toast.makeText(getActivity().getApplicationContext(), "Rescue request sent successfully. Thank you!!!", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
                             }
-                            else {
-                                Toast toast = null;
-                                toast = Toast.makeText(getActivity().getApplicationContext(),"Rescue request sent successfully. Thank you!!!",Toast.LENGTH_LONG);
-                                toast.show();
-                            }
-                        }
-                    };
-                    confirmRescue.rescue = rescue;
-                    //getActivity().setContentView(R.layout.rescue_layout);
-
+                        };
+                        confirmRescue.rescue = rescue;
+                        //getActivity().setContentView(R.layout.rescue_layout);
+                    }
                 } else {
                     // do nothing right now, validation error message is shown bu each textfield
                 }
@@ -327,6 +353,16 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstance)
+    {
+        super.onActivityCreated(savedInstance);
+        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.select_dialog_item , ANIMALS);
+        et_type.setAdapter(dropDownAdapter);
+
+    }
+
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
@@ -349,11 +385,13 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         btnGPSShowLocation = (Button) view_res.findViewById(R.id.btn_location);
         btnRescue = (Button) view_res.findViewById(R.id.btn_rescue);
         btnRescue.setAllCaps(false);
+        btnRescue.setEnabled(false);
+
         tvAddress = (EditText) view_res.findViewById(R.id.txt_location);
         tvAddress.setTextColor(Color.parseColor("#909090"));
         tvAddress.setHint(Html.fromHtml("<small>" + "Tap to enter location" + "</small>"));
 
-        et_type = (EditText) view_res.findViewById(R.id.et_type);
+        et_type = (AutoCompleteTextView) view_res.findViewById(R.id.et_type);
         et_type.setTextColor(Color.parseColor("#909090"));
         et_type.setHint(Html.fromHtml("<small>" + "Enter Type e.g. Dog, Cat etc" + "</small>"));
 
