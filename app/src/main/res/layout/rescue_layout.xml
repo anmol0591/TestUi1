@@ -21,6 +21,22 @@
         android:focusableInTouchMode="true"
         android:layout_marginTop="10dp" />
 
+    <AutoCompleteTextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Enter Type e.g Dog, Cat"
+        android:id="@+id/et_type"
+        android:inputType="textPersonName"
+        android:ellipsize="start"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:textColorHint="#d3d3d3"
+        android:layout_below="@+id/img_capture"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:lines="1" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,6 +158,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="Rescue"
+        android:enabled="false"
         android:id="@+id/btn_rescue"
         android:background="@drawable/rescuebutton"
         android:textColor="#FFFFFF"
