@@ -120,9 +120,11 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             }
         });
         progressBar.setVisibility(View.INVISIBLE);
-        et_email.setVisibility(View.GONE);
-        et_contact_number.setVisibility(View.GONE);
-        et_isd.setVisibility(View.GONE);
+        if(et_email.getText() != null && et_contact_number.getText() != null) {
+            et_email.setVisibility(View.GONE);
+            et_contact_number.setVisibility(View.GONE);
+            et_isd.setVisibility(View.GONE);
+        }
         Account[] accounts = AccountManager.get(getActivity().getApplicationContext()).getAccounts();
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {

@@ -38,25 +38,6 @@
         android:lines="1" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="Enter Type e.g Dog, Cat"
-        android:id="@+id/et_type"
-        android:inputType="textPersonName"
-        android:ellipsize="start"
-        android:gravity="center_horizontal"
-        android:textColorHint="#d3d3d3"
-        android:layout_below="@+id/img_capture"
-        android:maxLines="1"
-        android:lines="1"
-        android:layout_marginBottom="10dp"
-        android:layout_alignLeft="@+id/txt_location"
-        android:layout_alignStart="@+id/txt_location"
-        android:layout_alignRight="@+id/txt_location"
-        android:layout_alignEnd="@+id/txt_location" />
-
-    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -194,10 +175,8 @@
         android:layout_alignTop="@+id/et_contact_number"
         android:layout_alignLeft="@+id/et_email"
         android:layout_alignStart="@+id/et_email"
-        android:layout_toStartOf="@+id/et_contact_number"
-        android:editable="false"
-        android:layout_toLeftOf="@+id/et_contact_number"
-        />
+        android:layout_toStartOf="@+id/img_capture"
+        android:editable="false" />
 
 </RelativeLayout>
     </ScrollView>
