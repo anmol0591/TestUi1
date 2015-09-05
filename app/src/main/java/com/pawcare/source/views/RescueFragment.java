@@ -120,7 +120,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             }
         });
         progressBar.setVisibility(View.INVISIBLE);
-        if(et_email.getText() != null && et_contact_number.getText() != null) {
+        if(et_email != null && et_contact_number != null && !et_contact_number.getText().toString().equals("") && !et_email.getText().toString().equals("")) {
             et_email.setVisibility(View.GONE);
             et_contact_number.setVisibility(View.GONE);
             et_isd.setVisibility(View.GONE);
@@ -273,6 +273,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             if (savedEmail != null && savedNo != null && !savedEmail.equals("") && !savedNo.equals("")) {
                 et_email.setText(savedEmail);
                 et_contact_number.setText(savedNo);
+                et_email.setVisibility(View.GONE);
+                et_contact_number.setVisibility(View.GONE);
+                et_isd.setVisibility(View.GONE);
             } else {
                 et_email.setVisibility(View.VISIBLE);
                 et_contact_number.setVisibility(View.VISIBLE);
@@ -282,6 +285,11 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         return view_res;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -424,6 +432,11 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         } else if (et_more_info.getText().toString().length() == 0 || et_more_info == null) {
             validated = false;
             et_more_info.setError("Description is empty!");
+        } else if (imageBitmap == null) {
+            validated = false;
+            MessageOKPopUp msgpop = new MessageOKPopUp();
+            msgpop.setMessage("Please add an image of the animal.");
+            msgpop.show(getActivity().getSupportFragmentManager(), "alert");
         }
         return validated;
     }
