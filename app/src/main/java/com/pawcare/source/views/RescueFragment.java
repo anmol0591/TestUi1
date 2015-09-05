@@ -12,6 +12,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -565,7 +567,10 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         et_type.setText("");
         et_more_info.setText("");
         tvAddress.setText("");
-
+        imageBitmap = null;
+        Drawable myDrawable = getResources().getDrawable(R.drawable.owl);
+        imageBitmap  = ((BitmapDrawable) myDrawable).getBitmap();
+        viewImage.setImageBitmap(imageBitmap);
     }
 
     public int trimmedString(String str)
