@@ -18,11 +18,18 @@ import android.widget.Toast;
 import com.example.anm.uitest1.R;
 import com.pawcare.source.views.RescueFragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     ActionBar actionBar;
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
+    public static List<String> cityNameList = new ArrayList<String>();
+    public static List<String> rescueAnimalList = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
