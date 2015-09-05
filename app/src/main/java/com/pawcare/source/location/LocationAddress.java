@@ -24,6 +24,15 @@ import java.util.Locale;
 public class LocationAddress extends AsyncTask<Double, Void, Void> {
     public Context context = null;
     public GeoCodeCallback callback;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Address address;
     @Override
     protected Void doInBackground(Double... doubles) {

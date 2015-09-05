@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 
+import com.pawcare.source.views.RescueFragment;
+
 /**
  * Created by mur on 7/18/2015.
  */

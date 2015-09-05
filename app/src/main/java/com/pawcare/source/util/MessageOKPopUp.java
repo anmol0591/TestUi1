@@ -26,9 +26,9 @@ public class MessageOKPopUp extends android.support.v4.app.DialogFragment  {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final FragmentActivity act = getActivity();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(act);
-        alertDialog.setTitle("Alert");
+        alertDialog.setTitle("PawCare");
         alertDialog.setMessage(message);
-        alertDialog.setPositiveButton("ok",
+        alertDialog.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
