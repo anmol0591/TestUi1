@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/img_capture"
-        android:layout_width="175dp"
-        android:layout_height="115dp"
+        android:layout_width="100dp"
+        android:layout_height="110dp"
         android:background="#fff"
         android:padding="3dp"
         android:scaleType="fitXY"
-        android:src="@drawable/profile"
+        android:src="@drawable/owl"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_centerHorizontal="true"
@@ -35,8 +35,7 @@
         android:layout_below="@+id/img_capture"
         android:layout_centerHorizontal="true"
         android:maxLines="1"
-        android:lines="1"
-        />
+        android:lines="1" />
 
     <EditText
         android:layout_width="250dp"
@@ -169,16 +168,15 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/isdCode"
         android:inputType="phone"
-        android:textColor="#d3d3d3"
+        android:textColor="#909090"
         android:text="+91"
         android:ellipsize="start"
-        android:gravity="center_horizontal"
+        android:gravity="left"
         android:layout_alignTop="@+id/et_contact_number"
         android:layout_alignLeft="@+id/et_email"
         android:layout_alignStart="@+id/et_email"
-        android:layout_toStartOf="@+id/et_contact_number"
-        android:layout_toLeftOf="@+id/et_contact_number"
-        android:editable="false"/>
+        android:layout_toStartOf="@+id/img_capture"
+        android:editable="false" />
 
 </RelativeLayout>
     </ScrollView>

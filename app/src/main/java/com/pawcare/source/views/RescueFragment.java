@@ -18,7 +18,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
 import android.util.Patterns;
@@ -121,10 +120,11 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             }
         });
         progressBar.setVisibility(View.INVISIBLE);
-        et_email.setVisibility(View.GONE);
-        et_contact_number.setVisibility(View.GONE);
-        et_isd.setVisibility(View.GONE);
-        Pattern phonePattern = Patterns.PHONE;
+        if(et_email.getText() != null && et_contact_number.getText() != null) {
+            et_email.setVisibility(View.GONE);
+            et_contact_number.setVisibility(View.GONE);
+            et_isd.setVisibility(View.GONE);
+        }
         Account[] accounts = AccountManager.get(getActivity().getApplicationContext()).getAccounts();
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {
@@ -132,11 +132,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                 et_email.setText(possibleEmail);
             }
         }
-        TelephonyManager tm = (TelephonyManager) (getActivity().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE));
-        String number = tm.getLine1Number();
-        if (number != null) {
-            et_contact_number.setText(number);
-        }
+
         // Clicked add image button.
         captureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +306,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             } else {
                 et_email.setVisibility(View.VISIBLE);
                 et_contact_number.setVisibility(View.VISIBLE);
+                et_isd.setVisibility(View.VISIBLE);
             }
         }
         return view_res;
@@ -460,7 +457,6 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         if (et_type.getText().toString().length() == 0 || et_type == null) {
             validated = false;
             et_type.setError("Animal Type is required!");
-
         } else if (tvAddress.getText().toString().length() == 0 || tvAddress == null) {
             validated = false;
             tvAddress.setError("Location is required!");
@@ -470,6 +466,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         } else if (et_contact_number.getText().toString().length() != 10) {
             validated = false;
             et_contact_number.setError("Contact Number is invalid!");
+        } else if (et_more_info.getText().toString().length() == 0 || et_more_info == null) {
+            validated = false;
+            et_more_info.setError("Description is empty!");
         }
         return validated;
     }

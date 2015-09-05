@@ -10,7 +10,9 @@
         android:id="@+id/imageView"
         android:background="@drawable/paw_orange"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="160sp"
-        android:layout_marginLeft="160sp"
-        android:layout_marginTop="160sp" />
+        android:scaleType="center"
+        android:layout_marginBottom="200dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"/>
 </RelativeLayout>
