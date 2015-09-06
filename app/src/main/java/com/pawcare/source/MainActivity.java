@@ -1,5 +1,6 @@
 package com.pawcare.source;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -121,16 +122,47 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_LONG).show();
+
+            switch(position){
+
+                case 0 :
+                    MessageOKPopUp msgpop = new MessageOKPopUp();
+                    msgpop.setMessage("Hello");
+                    msgpop.show(getSupportFragmentManager(), "alert");
+
+                case 1 :
+                    MessageOKPopUp msgpop1 = new MessageOKPopUp();
+                    msgpop1.setMessage("Chup raho");
+                    msgpop1.show(getSupportFragmentManager(), "alert");
+
+                case 2:
+                    MessageOKPopUp msgpop2 = new MessageOKPopUp();
+                    msgpop2.setMessage("Chal hatt");
+                    msgpop2.show(getSupportFragmentManager(), "alert");
+            }
+
             selectItem(position);
+
         }
+        private void selectItem(int position) {
+
+            mDrawerList.setItemChecked(position, true);
+
+            setTitle(mOptionsNavDrawer[position]);
+
+        }
+
+        public void setTitle(CharSequence title) {
+
+            actionBar.setTitle(title);
+
+        }
+
     }
 
-    private void selectItem(int position) {
-        // update the main content by replacing fragments
-        MessageOKPopUp messageOKPopUp = new MessageOKPopUp();
-        messageOKPopUp.setMessage("Option 1");
-        messageOKPopUp.show(getSupportFragmentManager(), "alert");
-    }
+    public void onDrawerOpened(View drawerView) {
+        mDrawerList.bringToFront();}
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
