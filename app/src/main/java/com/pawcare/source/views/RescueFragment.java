@@ -591,7 +591,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                 viewImage.setImageBitmap(imageBitmap);
             }
         }
-        if(tvAddress != null) {
+        if(tvAddress != null && trimmedString(tvAddress.getText().toString())!=0 ) {
             btnRescue.setBackgroundColor(Color.parseColor("#00ccff"));
             btnRescue.setEnabled(true);
         }
