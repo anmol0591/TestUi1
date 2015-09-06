@@ -574,12 +574,26 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         tvAddress.setText("");
         imageBitmap = null;
         Drawable myDrawable = getResources().getDrawable(R.drawable.owl);
-        imageBitmap  = ((BitmapDrawable) myDrawable).getBitmap();
-        viewImage.setImageBitmap(imageBitmap);
+        Bitmap bitmap  = ((BitmapDrawable) myDrawable).getBitmap();
+        viewImage.setImageBitmap(bitmap);
     }
 
     public int trimmedString(String str)
     {
         return str.trim().length();
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible) {
+            if(imageBitmap != null) {
+                viewImage.setImageBitmap(imageBitmap);
+            }
+        }
+        if(tvAddress != null) {
+            btnRescue.setBackgroundColor(Color.parseColor("#00ccff"));
+            btnRescue.setEnabled(true);
+        }
     }
 }

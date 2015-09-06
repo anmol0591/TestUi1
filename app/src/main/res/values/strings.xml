@@ -4,5 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="more_info">My Details \u00BB</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
     <string name="copyright">Copyright &#169; PawCare</string>
 </resources>
