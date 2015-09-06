@@ -104,6 +104,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     SharedPreferences sharedPreferences;
     Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
     Pattern phoneNumberPattern = Patterns.PHONE;
+    boolean rescueEnabled = false;
 
     Rescue rescue = new Rescue();
     @Override
