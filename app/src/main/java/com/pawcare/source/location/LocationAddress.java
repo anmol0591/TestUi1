@@ -48,10 +48,17 @@ public class LocationAddress extends AsyncTask<Double, Void, Void> {
 
     public String getAddressString(Address address) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-            sb.append(address.getAddressLine(i)).append(" ");
+        if(address!=null)
+        {
+            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                sb.append(address.getAddressLine(i)).append(" ");
+            }
+            locationResult = sb.toString();
         }
-        locationResult = sb.toString();
+        else
+        {
+            return "NA";
+        }
         return locationResult;
     }
     public String getCity(Address address){
