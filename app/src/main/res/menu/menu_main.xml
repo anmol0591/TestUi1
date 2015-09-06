@@ -9,5 +9,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings"
         android:title="About us"
+        android:icon="@drawable/ic_action_navigation_more_vert"
         app:showAsAction="never" />
 </menu>

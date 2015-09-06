@@ -89,6 +89,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+       // menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_navigation_more_vert));
         return super.onCreateOptionsMenu(menu);
     }
 

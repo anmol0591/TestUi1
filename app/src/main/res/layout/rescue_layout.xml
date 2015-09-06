@@ -51,7 +51,6 @@
         android:clickable="true"
         android:ellipsize="start"
         android:scrollHorizontally="true"
-        android:enabled="false"
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/et_type"
