@@ -51,6 +51,7 @@ import com.pawcare.source.util.MessageOKPopUp;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -87,7 +88,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     Button btnGPSShowLocation, btnRescue; // Button for GPS Location
     EditText tvAddress, et_more_info, et_email, et_contact_number, et_isd;
     AutoCompleteTextView et_type;
-    ProgressBar progressBar;
+   ProgressBar progressBar;
     String str_location;
     View view_res;
     protected LocationManager locationManager;
@@ -100,6 +101,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     private Location location = null;
     SharedPreferences sharedPreferences;
     Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+    Pattern phoneNumberPattern = Patterns.PHONE;
 
     Rescue rescue = new Rescue();
     @Override
@@ -112,6 +114,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         initializeUIElements();
         btnRescue.setEnabled(false);
         btnRescue.setBackgroundColor(Color.parseColor("#d3d3d3"));
+        sharedPreferences = ((Context) getActivity()).getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
         et_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 String selection = (String)parent.getItemAtPosition(position);
@@ -225,14 +228,14 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                             trimmedString(tvAddress.getText().toString())==0 )
                     {
                         MessageOKPopUp msgpop = new MessageOKPopUp();
-                        msgpop.setMessage("Please fill all the details for the resue!");
+                        msgpop.setMessage("Please fill all the details for the rescue!");
                         msgpop.show(getActivity().getSupportFragmentManager(), "alert");
 
                     }
                     else {
                         if (!lst_animals.contains(et_type.getText().toString().toLowerCase())) {
                             MessageOKPopUp msgpop = new MessageOKPopUp();
-                            msgpop.setMessage("We currently don't support rescue of " + et_type.getText() + " Soon, maybe!");
+                            msgpop.setMessage("We currently don't support rescue of " + et_type.getText() + ".");
                             msgpop.show(getActivity().getSupportFragmentManager(), "alert");
 
                         } else {
@@ -296,7 +299,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             }
         });
 
-        sharedPreferences = ((Context) getActivity()).getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
+
         if (sharedPreferences.contains("email") && sharedPreferences.contains("contact")) {
             String savedEmail = sharedPreferences.getString("email", "");
             String savedNo = sharedPreferences.getString("contact", "");
@@ -394,7 +397,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void onActivityCreated(Bundle savedInstance)
     {
         super.onActivityCreated(savedInstance);
-        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.select_dialog_item , MainActivity.rescueAnimalList);
+        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.simple_dropdown_item_1line , MainActivity.rescueAnimalList);
         et_type.setAdapter(dropDownAdapter);
 
     }
@@ -431,7 +434,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
         et_type = (AutoCompleteTextView) view_res.findViewById(R.id.et_type);
         et_type.setTextColor(Color.parseColor("#909090"));
-        et_type.setHint(Html.fromHtml("<small>" + "Enter Type e.g. Dog, Cat etc" + "</small>"));
+        et_type.setHint(Html.fromHtml("<small>" + "Enter Type e.g. Owl etc" + "</small>"));
 
         et_email = (EditText) view_res.findViewById(R.id.et_email);
         et_email.setTextColor(Color.parseColor("#909090"));
@@ -443,7 +446,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
         et_more_info = (EditText) view_res.findViewById(R.id.et_more_info);
         et_more_info.setTextColor(Color.parseColor("#909090"));
-        et_more_info.setHint(Html.fromHtml("<small>" + "Description e.g condition" + "</small>"));
+        et_more_info.setHint(Html.fromHtml("<small>" + "Description" + "</small>"));
 
         captureImage = (ImageButton) view_res.findViewById(R.id.btn_image_capture);
         viewImage = (ImageView) view_res.findViewById(R.id.img_capture);
@@ -454,16 +457,16 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
     public Boolean fieldValidation() {
         Boolean validated = true;
-        if (et_type.getText().toString().length() == 0 || et_type == null) {
+        if (et_type.getText().toString().trim().length() == 0 || et_type == null) {
             validated = false;
             et_type.setError("Animal Type is required!");
-        } else if (tvAddress.getText().toString().length() == 0 || tvAddress == null) {
+        } else if (tvAddress.getText().toString().trim().length() == 0 || tvAddress == null) {
             validated = false;
             tvAddress.setError("Location is required!");
         } else if (!emailPattern.matcher(et_email.getText().toString()).matches()) {
             validated = false;
             et_email.setError("Email id is invalid!");
-        } else if (et_contact_number.getText().toString().length() != 10) {
+        } else if (et_contact_number.getText().toString().trim().length() != 10) {
             validated = false;
             et_contact_number.setError("Contact Number is invalid!");
         } else if (et_more_info.getText().toString().length() == 0 || et_more_info == null) {

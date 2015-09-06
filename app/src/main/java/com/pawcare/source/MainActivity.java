@@ -1,25 +1,22 @@
 package com.pawcare.source;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
-import com.pawcare.source.views.RescueFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -27,6 +24,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ActionBar actionBar;
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
+    SharedPreferences sharedPreferences;
     public static List<String> cityNameList = new ArrayList<String>();
     public static List<String> rescueAnimalList = new ArrayList<String>();
 
@@ -124,4 +122,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        sharedPreferences = getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet("rescueAnimalList", new HashSet<String>(rescueAnimalList));
+
+    }
+
+
 }

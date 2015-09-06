@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import com.example.anm.uitest1.R;
 import com.pawcare.source.views.RescueFragment;
 
 /**
@@ -32,6 +35,8 @@ public class GPSEnableDialog extends android.support.v4.app.DialogFragment {
         alertDialog.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        ProgressBar prgBar = (ProgressBar)getActivity().findViewById(R.id.progressBar1);
+                        prgBar.setVisibility(View.INVISIBLE);
                         dialog.cancel();
                     }
                 });

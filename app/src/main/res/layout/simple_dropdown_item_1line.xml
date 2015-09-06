@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     style="?android:attr/dropDownItemStyle"
-    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+    android:textAppearance="?android:textAppearanceSmallInverse"
     android:singleLine="true"
     android:layout_width="fill_parent"
+    android:background="#FFFFFF"
+    android:textColor="#909090"
+    android:height="25dp"
+
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:ellipsize="marquee" />
