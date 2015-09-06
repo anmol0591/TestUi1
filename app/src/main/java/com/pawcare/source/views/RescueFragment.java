@@ -258,6 +258,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                         Toast toast = null;
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Error in sending rescue request. Try again.", Toast.LENGTH_LONG);
                                         toast.show();
+                                        btnRescue.setEnabled(true);
+                                        btnRescue.setBackgroundColor(Color.parseColor("#00ccff"));
                                     } else {
                                         Toast toast = null;
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Rescue request sent successfully. Thank you!!!", Toast.LENGTH_LONG);

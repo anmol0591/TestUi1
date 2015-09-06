@@ -51,6 +51,7 @@
         android:clickable="true"
         android:ellipsize="start"
         android:scrollHorizontally="true"
+        android:enabled="false"
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/et_type"
@@ -177,7 +178,20 @@
         android:layout_alignLeft="@+id/et_email"
         android:layout_alignStart="@+id/et_email"
         android:layout_toStartOf="@+id/img_capture"
+        android:layout_toLeftOf="@+id/img_capture"
         android:editable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/copyright"
+        android:id="@+id/textView2"
+        android:gravity="bottom"
+        android:textColor="#d3d3d3"
+        android:paddingTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_rescue" />
 
 </RelativeLayout>
     </ScrollView>
