@@ -2,6 +2,8 @@ package com.pawcare.source;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
@@ -24,7 +26,7 @@ import com.pawcare.source.util.MessageOKPopUp;
 import com.pawcare.source.views.RescueFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -32,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ActionBar actionBar;
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
+    SharedPreferences sharedPreferences;
     public static List<String> cityNameList = new ArrayList<String>();
     public static List<String> rescueAnimalList = new ArrayList<String>();
 
@@ -220,4 +223,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        sharedPreferences = getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet("rescueAnimalList", new HashSet<String>(rescueAnimalList));
+
+    }
+
+
 }

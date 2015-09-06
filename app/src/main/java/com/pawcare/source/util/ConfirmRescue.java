@@ -5,17 +5,21 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
 import com.pawcare.source.Rescue;
+import com.pawcare.source.views.RescueFragment;
 
 import java.util.logging.Handler;
 
@@ -49,12 +53,19 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                         toast = Toast.makeText(getActivity().getApplicationContext(),"Sending request to Rescuer",Toast.LENGTH_LONG);
                         toast.show();
                         rescue.persist();
+                        Button resBtn = (Button)getActivity().findViewById(R.id.btn_rescue);
+                        resBtn.setBackgroundColor(Color.parseColor("#d3d3d3"));
+                        resBtn.setEnabled(false);
+
+
                     }
                 });
         alertDialog.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+
+
                     }
                 });
 

@@ -7,9 +7,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.parse.Parse;
+import com.pawcare.source.InitializeParse;
 import com.pawcare.source.MainActivity;
 
 
@@ -38,6 +41,18 @@ public class SplashActivity extends Activity {
                 // Start your app main activity
 
                 if(isNetworkAvailable()==true) {
+                    try {
+                        Parse.initialize(getApplicationContext(), "J3VbZCECbLqWmVx4RcObMWuZ18JvbDMuCKWQIr47",
+                                "QdqM7emSztOwSI46gwdClnZussx3x04cqnPfTAfI");
+                        Log.d("PAWED", "Parse initialised");
+                    }
+                    catch(Exception e)
+                    {
+                        Toast toast = null;
+                        toast = Toast.makeText(getApplicationContext(), "Connectivity Issues! Try Again!", Toast.LENGTH_LONG);
+                        toast.show();
+                        finish();
+                    }
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(i);
 

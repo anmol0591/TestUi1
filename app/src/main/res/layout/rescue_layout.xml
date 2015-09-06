@@ -30,6 +30,7 @@
         android:inputType="textPersonName"
         android:ellipsize="start"
         android:ems="10"
+
         android:gravity="center_horizontal"
         android:textColorHint="#d3d3d3"
         android:layout_below="@+id/img_capture"
@@ -43,14 +44,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Location"
         android:id="@+id/txt_location"
-        android:editable="true"
-        android:singleLine="true"
+        android:maxLines="1"
         android:inputType="textPostalAddress"
-        android:focusable="true"
+        android:focusable="false"
         android:textColorHint="#d3d3d3"
         android:clickable="true"
-        android:cursorVisible="true"
         android:ellipsize="start"
+        android:scrollHorizontally="true"
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/et_type"
@@ -89,7 +89,8 @@
         android:layout_below="@+id/txt_location"
         android:ellipsize="start"
         android:gravity="center_horizontal"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/txt_location"
+        android:layout_alignEnd="@+id/txt_location" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -160,7 +161,7 @@
         android:layout_below="@+id/et_more_info"
         android:layout_alignRight="@+id/et_email"
         android:layout_alignEnd="@+id/et_email"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="12dp"/>
 
     <EditText
         android:layout_width="wrap_content"
