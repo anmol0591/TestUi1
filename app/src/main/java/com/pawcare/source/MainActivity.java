@@ -8,16 +8,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.pawcare.source.util.Persistence;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -25,12 +31,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
     SharedPreferences sharedPreferences;
-    public static List<String> cityNameList = new ArrayList<String>();
-    public static List<String> rescueAnimalList = new ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Persistence persistence = new Persistence(getApplicationContext());
+        if (!persistence.isSeeded()){
+            persistence.seedAnimals();
+            Log.d("PAWEDX","SEEDED ANIMALS");
+            persistence.seedCity();
+        }
+
         InitializeParse initializeParse = new InitializeParse();
         initializeParse.execute(getApplicationContext());
 
@@ -44,15 +55,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar.addTab(actionBar.newTab().setText("Rescue").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Adoption").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Foster Care").setTabListener(this));
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_home);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_home);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -127,10 +129,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onDestroy()
     {
         super.onDestroy();
-        sharedPreferences = getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putStringSet("rescueAnimalList", new HashSet<String>(rescueAnimalList));
-
     }
 
 

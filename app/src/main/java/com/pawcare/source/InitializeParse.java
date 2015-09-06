@@ -7,6 +7,7 @@ import android.util.Log;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.pawcare.source.util.Persistence;
 
 import org.json.JSONArray;
 
@@ -27,23 +28,28 @@ public class InitializeParse extends AsyncTask<Context, Void, Void> {
 
             ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
             List<ParseObject> cityObjects = query.find();
+            List<String> cityNameList = new ArrayList<>();
             for (ParseObject cityObject : cityObjects) {
-                MainActivity.cityNameList.add(cityObject.getString("name"));
+
+                cityNameList.add(cityObject.getString("name"));
                 JSONArray aliasContent = cityObject.getJSONArray("alias");
                 for (int i = 0; i < aliasContent.length(); i++) {
-                    MainActivity.cityNameList.add(aliasContent.get(i).toString());
-
-
+                    cityNameList.add(aliasContent.get(i).toString());
                 }
             }
+            Persistence p = new Persistence(params[0]);
+            p.persistList(cityNameList,"city");
+
+            ArrayList<String> animals = new ArrayList<>();
             query = ParseQuery.getQuery("Animals");
+            query.setLimit(300);
             List<ParseObject> animalObjects = query.find();
             for (ParseObject animalObject : animalObjects) {
-                MainActivity.rescueAnimalList.add(animalObject.getString("type"));
-                Log.d("PAWED", " " + animalObject.getString("type"));
+                animals.add(animalObject.getString("type"));
             }
-
-
+            Log.d("PAWEDX",animals.toString());
+            p.persistList(animals,"animals");
+            Log.d("PAWEDX","INIT DONE");
         } catch (Exception e) {
             Log.d("PAWED", "Exception in initialising Parse" + e.toString());
 
