@@ -1,29 +1,19 @@
 package com.pawcare.source;
 
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
-import com.pawcare.source.util.MessageOKPopUp;
-import com.pawcare.source.views.RescueFragment;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,14 +27,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     SharedPreferences sharedPreferences;
     public static List<String> cityNameList = new ArrayList<String>();
     public static List<String> rescueAnimalList = new ArrayList<String>();
-
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-    private String[] mOptionsNavDrawer = {"About", "Version", "Foster Care"};
 
 
     @Override
@@ -62,43 +44,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar.addTab(actionBar.newTab().setText("Rescue").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Adoption").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Foster Care").setTabListener(this));
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.ic_home);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
-
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // set a custom shadow that overlays the main content when the drawer opens
-        //    mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this, R.layout.drawer_list_item, mOptionsNavDrawer));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.mipmap.ic_home,  /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            public void onDrawerClosed(View view) {
-                actionBar.setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                actionBar.setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if (savedInstanceState == null) {
-            // selectItem(0);
-        }
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_home);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -120,64 +74,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             }
         });
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_LONG).show();
-
-            switch(position){
-
-                case 0 :
-                    MessageOKPopUp msgpop = new MessageOKPopUp();
-                    msgpop.setMessage("Hello");
-                    msgpop.show(getSupportFragmentManager(), "alert");
-
-                case 1 :
-                    MessageOKPopUp msgpop1 = new MessageOKPopUp();
-                    msgpop1.setMessage("Chup raho");
-                    msgpop1.show(getSupportFragmentManager(), "alert");
-
-                case 2:
-                    MessageOKPopUp msgpop2 = new MessageOKPopUp();
-                    msgpop2.setMessage("Chal hatt");
-                    msgpop2.show(getSupportFragmentManager(), "alert");
-            }
-
-            selectItem(position);
-
-        }
-        private void selectItem(int position) {
-
-            mDrawerList.setItemChecked(position, true);
-
-            setTitle(mOptionsNavDrawer[position]);
-
-        }
-
-        public void setTitle(CharSequence title) {
-
-            actionBar.setTitle(title);
-
-        }
-
-    }
-
-    public void onDrawerOpened(View drawerView) {
-        mDrawerList.bringToFront();}
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -206,8 +102,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpTo(this, getIntent());
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
