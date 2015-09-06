@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
 import com.pawcare.source.util.Persistence;
+import com.pawcare.source.util.MessageOKPopUp;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -99,6 +100,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+       // menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_navigation_more_vert));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -109,6 +111,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, getIntent());
                 return true;
+            case R.id.action_settings:
+                MessageOKPopUp msgpop = new MessageOKPopUp();
+                msgpop.setMessage("PawCare is created with the hope of saving animals. We work to rescue and rehabilitate sick and needy animals in co-operation with People For Animals, NGO, Bangalore. " +
+                        "\nCurrently, we are available in Bangalore only but we hope to be present in many more cities.\n" +
+                                "\n" +
+                                "How to Paw:\n" +
+                                "\n" +
+                                "1. Fill the animal type, location, image and description. \n" +
+                                "2. Hit rescue.\n" +
+                                "3. If we support the rescue of the animal, a sms and email goes to the NGO who will track the animal.\n" +
+                                "\n" +
+                                "We currently support rescue of limited number of animals. We will be supporting many more in coming days. \n" +
+                                "\n" +
+                                "For any query contact us at pawcarehelp@gmail.com\n" +
+                                "\n Love,\n Team PawCare");
+                msgpop.show(getSupportFragmentManager(), "alert");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,6 +147,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onDestroy()
     {
         super.onDestroy();
+        sharedPreferences = getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet("rescueAnimalList", new HashSet<String>(rescueAnimalList));
+
     }
 
 

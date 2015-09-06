@@ -10,7 +10,11 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
         <item name="android:actionMenuTextAppearance">@style/MyMenuTextAppearance</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
+    </style>
+    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_navigation_more_vert</item>
     </style>
 
 

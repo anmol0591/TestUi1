@@ -53,6 +53,8 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                         toast = Toast.makeText(getActivity().getApplicationContext(),"Sending request to Rescuer",Toast.LENGTH_LONG);
                         toast.show();
                         rescue.persist();
+                        ProgressBar prgBar =(ProgressBar)getActivity().findViewById(R.id.rescueProgressBar);
+                        prgBar.setVisibility(View.VISIBLE);
                         Button resBtn = (Button)getActivity().findViewById(R.id.btn_rescue);
                         resBtn.setBackgroundColor(Color.parseColor("#d3d3d3"));
                         resBtn.setEnabled(false);

@@ -92,7 +92,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     Button btnGPSShowLocation, btnRescue; // Button for GPS Location
     EditText tvAddress, et_more_info, et_email, et_contact_number, et_isd;
     AutoCompleteTextView et_type;
-   ProgressBar progressBar;
+    ProgressBar progressBar, rescueProgressBar;
     String str_location;
     View view_res;
     protected LocationManager locationManager;
@@ -108,6 +108,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     Pattern phoneNumberPattern = Patterns.PHONE;
     ArrayList<String> animals;
     ArrayList<String> city;
+    boolean rescueEnabled = false;
 
     Rescue rescue = new Rescue();
     @Override
@@ -175,6 +176,12 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        if(address.equals("NA"))
+                                        {
+                                            Toast.makeText(getActivity().getApplicationContext(), "We're not able to locate you. Try again!", Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
+
                                         RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
                                         RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
                                         if(city.contains(locationAddress.getCity(locationAddress.getAddress())))
@@ -194,7 +201,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
                                         }
 
-                                    }
+                                    }}
                                 });
                             }catch (Exception e){
                                 Log.d("PAWED",e.toString());
@@ -270,6 +277,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                         Toast toast = null;
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Rescue request sent successfully. Thank you!!!", Toast.LENGTH_LONG);
                                         toast.show();
+                                        rescueProgressBar.setVisibility(View.INVISIBLE);
                                         reset();
                                     }
                                 }
@@ -346,11 +354,12 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
             locationAddress.callback = new GeoCodeCallback() {
                 @Override
                 public void convertedAddress(final String address) {
-                    Log.d("PAWED", "this is a key" + address);
+                    Log.d("PAWED", "Address: " + address);
                     try {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if(address.equals("NA"))
                                 RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
                                 RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
                                 if(city.contains(locationAddress.getCity(locationAddress.getAddress())))
@@ -361,16 +370,27 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                 }
                                 else
                                 {
-                                    RescueFragment.this.btnRescue.setEnabled(false);
-                                    RescueFragment.this.tvAddress.setText(address);
-                                    RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#D3D3D3"));
-                                    RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
-                                    Toast toast = null;
-                                    toast = Toast.makeText(getActivity().getApplicationContext(), "We're not there in your city yet! Be good to animals, ok?", Toast.LENGTH_LONG);
-                                    toast.show();
-
+                                    Toast.makeText(getActivity().getApplicationContext(), "We're not able to locate you. Try again!", Toast.LENGTH_LONG).show();
                                 }
+                                else {
+                                    RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
+                                    RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
+                                    if (MainActivity.cityNameList.contains(locationAddress.getCity(locationAddress.getAddress()))) {
+                                        RescueFragment.this.btnRescue.setEnabled(true);
+                                        RescueFragment.this.tvAddress.setText(address);
+                                        RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
 
+                                    } else {
+                                        RescueFragment.this.btnRescue.setEnabled(false);
+                                        RescueFragment.this.tvAddress.setText(address);
+                                        RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                                        RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
+                                        Toast toast = null;
+                                        toast = Toast.makeText(getActivity().getApplicationContext(), "We're not there in your city yet! Be good to animals, ok?", Toast.LENGTH_LONG);
+                                        toast.show();
+
+                                    }
+                                }
                             }
                         });
                     }catch (Exception e){
@@ -469,6 +489,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         captureImage = (ImageButton) view_res.findViewById(R.id.btn_image_capture);
         viewImage = (ImageView) view_res.findViewById(R.id.img_capture);
         progressBar = (ProgressBar) view_res.findViewById(R.id.progressBar1);
+        rescueProgressBar = (ProgressBar) view_res.findViewById(R.id.rescueProgressBar);
+        rescueProgressBar.setVisibility(View.INVISIBLE);
 
         et_isd = (EditText) view_res.findViewById(R.id.isdCode);
     }

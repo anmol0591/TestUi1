@@ -51,7 +51,6 @@
         android:clickable="true"
         android:ellipsize="start"
         android:scrollHorizontally="true"
-        android:enabled="false"
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/et_type"
@@ -180,13 +179,22 @@
         android:layout_toStartOf="@+id/img_capture"
         android:layout_toLeftOf="@+id/img_capture"
         android:editable="false" />
+    <ProgressBar
+        android:id="@+id/rescueProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:indeterminate="false"
+        android:layout_alignTop="@+id/copyRight"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/copyright"
-        android:id="@+id/textView2"
+        android:id="@+id/copyRight"
         android:gravity="bottom"
         android:textColor="#d3d3d3"
         android:paddingTop="80dp"
