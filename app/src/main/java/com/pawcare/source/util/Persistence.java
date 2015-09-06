@@ -50,8 +50,8 @@ public class Persistence {
         persistList(Arrays.asList(animals), "animals");
     }
     public void seedCity(){
-        String city[] = {"Bangalore","Bengaluru"};
-        persistList(Arrays.asList(city),"cities");
+        String city[] = {"Bangalore","Bengaluru","bangalore","bengaluru"};
+        persistList(Arrays.asList(city),"city");
     }
     public boolean isSeeded(){
         SharedPreferences sharedPreferences = context.getSharedPreferences("KEY", Context.MODE_PRIVATE);

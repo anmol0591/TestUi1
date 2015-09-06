@@ -147,10 +147,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onDestroy()
     {
         super.onDestroy();
-        sharedPreferences = getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putStringSet("rescueAnimalList", new HashSet<String>(rescueAnimalList));
-
     }
 
 

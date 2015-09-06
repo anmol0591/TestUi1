@@ -360,22 +360,13 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                             @Override
                             public void run() {
                                 if(address.equals("NA"))
-                                RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
-                                RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
-                                if(city.contains(locationAddress.getCity(locationAddress.getAddress())))
-                                {   RescueFragment.this.btnRescue.setEnabled(true);
-                                    RescueFragment.this.tvAddress.setText(address);
-                                    RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
-
-                                }
-                                else
                                 {
                                     Toast.makeText(getActivity().getApplicationContext(), "We're not able to locate you. Try again!", Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
                                     RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
-                                    if (MainActivity.cityNameList.contains(locationAddress.getCity(locationAddress.getAddress()))) {
+                                    if (city.contains(locationAddress.getCity(locationAddress.getAddress()))) {
                                         RescueFragment.this.btnRescue.setEnabled(true);
                                         RescueFragment.this.tvAddress.setText(address);
                                         RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
@@ -435,7 +426,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void onActivityCreated(Bundle savedInstance)
     {
         super.onActivityCreated(savedInstance);
-        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.simple_dropdown_item_1line , animals);
+        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.simple_dropdown_item_1line , animals);
         et_type.setAdapter(dropDownAdapter);
 
     }
