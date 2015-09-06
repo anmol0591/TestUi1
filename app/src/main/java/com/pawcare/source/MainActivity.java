@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.pawcare.source.util.MessageOKPopUp;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,15 +45,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar.addTab(actionBar.newTab().setText("Rescue").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Adoption").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Foster Care").setTabListener(this));
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_home);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_home);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -107,6 +99,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, getIntent());
                 return true;
+            case R.id.action_settings:
+                MessageOKPopUp msgpop = new MessageOKPopUp();
+                msgpop.setMessage("PawCare is created with the hope of saving animals. We work to rescue and rehabilitate sick and needy animals in co-operation with People For Animals, NGO, Bangalore. " +
+                        "\nCurrently, we are available in Bangalore only but we hope to be present in many more cities.\n" +
+                                "\n" +
+                                "How to Paw:\n" +
+                                "\n" +
+                                "1. Fill the animal type, location, image and description. \n" +
+                                "2. Hit rescue.\n" +
+                                "3. If we support the rescue of the animal, a sms and email goes to the NGO who will track the animal.\n" +
+                                "\n" +
+                                "We currently support rescue of limited number of animals. We will be supporting many more in coming days. \n" +
+                                "\n" +
+                                "For any query contact us at pawcarehelp@gmail.com\n" +
+                                "\n Love,\n Team PawCare");
+                msgpop.show(getSupportFragmentManager(), "alert");
         }
         return super.onOptionsItemSelected(item);
     }
