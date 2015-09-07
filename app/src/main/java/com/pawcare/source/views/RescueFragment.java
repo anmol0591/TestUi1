@@ -116,7 +116,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     Timer timer = null;
     RescueTimer rescueTimer = null;
 
+    MainActivity mainActivity = new MainActivity();
     Rescue rescue = new Rescue();
+
     @Override
     /**
      * creates and returns the view hierarchy associated with the fragment.
@@ -128,8 +130,10 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         city = new ArrayList<>(persistence.retrieveList("city"));
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
         initializeUIElements();
-        btnRescue.setEnabled(false);
-        btnRescue.setBackgroundColor(Color.parseColor("#d3d3d3"));
+        if(tvAddress != null && trimmedString(tvAddress.getText().toString())!=0 ) {
+            btnRescue.setEnabled(false);
+            btnRescue.setBackgroundColor(Color.parseColor("#d3d3d3"));
+        }
         sharedPreferences = ((Context) getActivity()).getSharedPreferences("MY_PREFS", (Context.MODE_PRIVATE));
         et_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
@@ -291,6 +295,19 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Rescue request sent successfully. Thank you!!!", Toast.LENGTH_LONG);
                                         toast.show();
                                         rescueProgressBar.setVisibility(View.INVISIBLE);
+
+                                        EditText type = (EditText) getActivity().findViewById(R.id.et_type);
+                                        type.setEnabled(true);
+
+                                        EditText moreInfo = (EditText)getActivity().findViewById(R.id.et_more_info);
+                                        moreInfo.setEnabled(true);
+
+                                        EditText phoneNumber = (EditText)getActivity().findViewById(R.id.et_contact_number);
+                                        phoneNumber.setEnabled(true);
+
+                                        EditText email = (EditText)getActivity().findViewById(R.id.et_email);
+                                        email.setEnabled(true);
+
                                         reset();
                                     }
                                 }
