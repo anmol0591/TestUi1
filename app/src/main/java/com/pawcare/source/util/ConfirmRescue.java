@@ -44,11 +44,14 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(act);
         alertDialog.setTitle("PawCare");
         alertDialog.setMessage(message);
+        final Persistence persistence = new Persistence(getActivity().getApplicationContext());
         alertDialog.setPositiveButton("ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //dialog.cancel();
                         //PARSE
+
+                        persistence.persistString("Started","state");
                         Toast toast = null;
                         toast = Toast.makeText(getActivity().getApplicationContext(),"Sending request to Rescuer",Toast.LENGTH_LONG);
                         toast.show();
@@ -58,13 +61,12 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                         Button resBtn = (Button)getActivity().findViewById(R.id.btn_rescue);
                         resBtn.setBackgroundColor(Color.parseColor("#d3d3d3"));
                         resBtn.setEnabled(false);
-
-
                     }
                 });
         alertDialog.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        persistence.persistString("Canceled","state");
                         dialog.cancel();
 
 

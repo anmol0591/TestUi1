@@ -23,6 +23,17 @@ public class Persistence {
     public Persistence(Context context){
         this.context = context;
     }
+
+    public void persistString(String string, String key){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("KEY", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =  sharedPreferences.edit();
+        editor.putString(key,string);
+        editor.commit();
+    }
+    public String retrieveString(String key){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("KEY", Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key,"");
+    }
     public void persistList(List<String> list, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("KEY", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =  sharedPreferences.edit();

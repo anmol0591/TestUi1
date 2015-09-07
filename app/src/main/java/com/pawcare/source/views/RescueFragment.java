@@ -58,6 +58,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.regex.Pattern;
 
 import android.view.animation.Animation;
@@ -109,6 +113,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     ArrayList<String> animals;
     ArrayList<String> city;
     boolean rescueEnabled = false;
+    Timer timer = null;
+    RescueTimer rescueTimer = null;
 
     Rescue rescue = new Rescue();
     @Override
@@ -117,7 +123,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
      * comment
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Persistence persistence = new Persistence(getActivity().getApplicationContext());
+        final Persistence persistence = new Persistence(getActivity().getApplicationContext());
         animals = new ArrayList<>(persistence.retrieveList("animals"));
         city = new ArrayList<>(persistence.retrieveList("city"));
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
@@ -257,6 +263,12 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
                             confirmRescue.setMessage("Are you sure about rescuing this animal?");
                             confirmRescue.show(getActivity().getSupportFragmentManager(), "alert");
+                            if (timer == null){
+                                timer = new Timer();
+                                rescueTimer = new RescueTimer();
+                                rescueTimer.context = getActivity().getApplicationContext();
+                                timer.schedule(rescueTimer, 10000, 10000);
+                            }
 
                             rescue.setType(et_type.getText().toString());
                             rescue.setMoreInfo(et_more_info.getText().toString());
@@ -267,6 +279,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                             rescue.callback = new PersistCallback() {
                                 @Override
                                 public void persisted(Exception e) {
+                                    persistence.persistString("Persisted","state");
                                     if (e != null) {
                                         Toast toast = null;
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Error in sending rescue request. Try again.", Toast.LENGTH_LONG);
@@ -613,6 +626,38 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
         if(tvAddress != null && trimmedString(tvAddress.getText().toString())!=0 ) {
             btnRescue.setBackgroundColor(Color.parseColor("#00ccff"));
             btnRescue.setEnabled(true);
+        }
+    }
+    class RescueTimer extends TimerTask {
+        public Context context;
+        @Override
+        public void run() {
+            Log.d("PAWEDX","RUN");
+            SharedPreferences sharedPreferences = context.getSharedPreferences("KEY", Context.MODE_PRIVATE);
+            String state = sharedPreferences.getString("state","");
+            Log.d("PAWEDX","State is "+state);
+            if (state.equalsIgnoreCase("Canceled")){
+                //nothing happened
+                timer.cancel();
+                timer = null;
+            }
+            else if(state.equalsIgnoreCase("Started")){
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast toast = Toast.makeText(context, "Still sending the Rescue Request...", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                });
+            }
+            else if (state.equalsIgnoreCase("Persisted")){
+                // stop the timer
+                timer.cancel();
+                timer = null;
+            }
+
+
         }
     }
 }
