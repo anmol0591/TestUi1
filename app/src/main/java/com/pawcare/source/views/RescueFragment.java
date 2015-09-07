@@ -50,8 +50,10 @@ import com.pawcare.source.util.BitmapConverterCallback;
 import com.pawcare.source.util.ConfirmRescue;
 import com.pawcare.source.util.ImageCapture;
 import com.pawcare.source.util.MessageOKPopUp;
+import com.pawcare.source.util.Persistence;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -104,6 +106,8 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     SharedPreferences sharedPreferences;
     Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
     Pattern phoneNumberPattern = Patterns.PHONE;
+    ArrayList<String> animals;
+    ArrayList<String> city;
     boolean rescueEnabled = false;
 
     Rescue rescue = new Rescue();
@@ -113,6 +117,9 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
      * comment
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Persistence persistence = new Persistence(getActivity().getApplicationContext());
+        animals = new ArrayList<>(persistence.retrieveList("animals"));
+        city = new ArrayList<>(persistence.retrieveList("city"));
         view_res = inflater.inflate(R.layout.rescue_layout, container, false);
         initializeUIElements();
         btnRescue.setEnabled(false);
@@ -177,11 +184,10 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
 
                                         RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
                                         RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
-                                        if(MainActivity.cityNameList.contains(locationAddress.getCity(locationAddress.getAddress())))
+                                        if(city.contains(locationAddress.getCity(locationAddress.getAddress())))
                                         {   RescueFragment.this.btnRescue.setEnabled(true);
                                             RescueFragment.this.tvAddress.setText(address);
                                             RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
-
                                         }
                                         else
                                         {
@@ -227,7 +233,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                 ConfirmRescue confirmRescue = new ConfirmRescue();
 
                 if (validation == true) {
-                    List<String> lst_animals = MainActivity.rescueAnimalList;
+                    List<String> lst_animals = animals;
 
                     if(et_type.getText()==null || et_more_info == null || et_email == null || et_contact_number == null || tvAddress == null
                             || trimmedString(et_type.getText().toString()) ==0 ||
@@ -373,7 +379,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                 else {
                                     RescueFragment.this.btnRescue.setBackgroundColor(Color.parseColor("#00CCFF"));
                                     RescueFragment.this.btnRescue.setTextColor(Color.parseColor("#FFFFFF"));
-                                    if (MainActivity.cityNameList.contains(locationAddress.getCity(locationAddress.getAddress()))) {
+                                    if (city.contains(locationAddress.getCity(locationAddress.getAddress()))) {
                                         RescueFragment.this.btnRescue.setEnabled(true);
                                         RescueFragment.this.tvAddress.setText(address);
                                         RescueFragment.this.progressBar.setVisibility(View.INVISIBLE);
@@ -433,7 +439,7 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
     public void onActivityCreated(Bundle savedInstance)
     {
         super.onActivityCreated(savedInstance);
-        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.simple_dropdown_item_1line , MainActivity.rescueAnimalList);
+        dropDownAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.simple_dropdown_item_1line , animals);
         et_type.setAdapter(dropDownAdapter);
 
     }
