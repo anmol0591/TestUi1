@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     FragmentPageAdapter fragmentPageAdapter;
     SharedPreferences sharedPreferences;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Persistence persistence = new Persistence(getApplicationContext());

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.anm.uitest1.R;
+import com.pawcare.source.MainActivity;
 import com.pawcare.source.Rescue;
 import com.pawcare.source.views.RescueFragment;
 
@@ -58,8 +59,6 @@ public class ConfirmRescue extends android.support.v4.app.DialogFragment {
                         Button resBtn = (Button)getActivity().findViewById(R.id.btn_rescue);
                         resBtn.setBackgroundColor(Color.parseColor("#d3d3d3"));
                         resBtn.setEnabled(false);
-
-
                     }
                 });
         alertDialog.setNegativeButton("Cancel",
