@@ -280,6 +280,19 @@ public class RescueFragment extends android.support.v4.app.Fragment implements L
                                         toast = Toast.makeText(getActivity().getApplicationContext(), "Rescue request sent successfully. Thank you!!!", Toast.LENGTH_LONG);
                                         toast.show();
                                         rescueProgressBar.setVisibility(View.INVISIBLE);
+
+                                        EditText type = (EditText) getActivity().findViewById(R.id.et_type);
+                                        type.setEnabled(true);
+
+                                        EditText moreInfo = (EditText)getActivity().findViewById(R.id.et_more_info);
+                                        moreInfo.setEnabled(true);
+
+                                        EditText phoneNumber = (EditText)getActivity().findViewById(R.id.et_contact_number);
+                                        phoneNumber.setEnabled(true);
+
+                                        EditText email = (EditText)getActivity().findViewById(R.id.et_email);
+                                        email.setEnabled(true);
+
                                         reset();
                                     }
                                 }
