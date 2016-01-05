@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.pawcare.source.views.AdoptionFragment;
 import com.pawcare.source.views.RescueFragment;
 
 /**
@@ -19,7 +20,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0 : return new RescueFragment();
-            case 1: return new Adoption();
+            case 1: return new AdoptionFragment();
             case 2: return new FosterCare();
             default: break;
         }
